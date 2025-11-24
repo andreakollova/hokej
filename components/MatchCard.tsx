@@ -11,36 +11,46 @@ export const MatchCard: React.FC<MatchCardProps> = ({ match, variant = 'row' }) 
   const isLive = match.status === MatchStatus.LIVE;
   const isFinal = match.status === MatchStatus.FINAL;
 
-  // 1. STRIP VARIANT (Top Bar)
+  // 1. STRIP VARIANT (Updated for Modern Ticker)
   if (variant === 'strip') {
     return (
-      <div className="w-[280px] bg-white rounded-2xl p-4 border border-gray-100 hover:border-blue-100 shadow-sm hover:shadow-md transition-all cursor-pointer group flex flex-col justify-between h-[100px]">
-        <div className="flex justify-between items-center mb-2">
-           <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wider truncate max-w-[100px]">{match.competition}</span>
-           {isLive ? (
-             <span className="flex items-center gap-1.5 bg-red-50 text-slovak-red px-2 py-0.5 rounded-full text-[10px] font-bold animate-pulse">
-               <span className="w-1.5 h-1.5 rounded-full bg-slovak-red"></span>
-               {match.period || 'LIVE'}
-             </span>
-           ) : isFinal ? (
-             <span className="text-[10px] font-bold text-gray-500 bg-gray-100 px-2 py-0.5 rounded-full">KONIEC</span>
-           ) : (
-             <span className="text-[10px] font-bold text-slovak-blue bg-blue-50 px-2 py-0.5 rounded-full">{match.time}</span>
-           )}
-        </div>
+      <div className="w-[240px] bg-white rounded-lg p-3 border border-gray-200 hover:border-slovak-blue shadow-sm hover:shadow-md transition-all cursor-pointer group flex items-center justify-between h-[64px]">
         
-        <div className="flex justify-between items-center px-1">
-          <div className="flex items-center gap-3 w-1/3">
-             <img src={match.homeTeam.logo} alt={match.homeTeam.shortName} className="h-8 w-8 object-contain" />
-             <span className="font-bold text-xs text-gray-900 truncate">{match.homeTeam.shortName}</span>
-          </div>
-          <div className="font-mono font-bold text-sm text-gray-900 bg-gray-50 px-2 py-1 rounded-lg min-w-[50px] text-center shadow-inner">
-            {isFinal || isLive ? `${match.scoreHome} - ${match.scoreAway}` : 'vs'}
-          </div>
-          <div className="flex items-center justify-end gap-3 w-1/3">
-             <span className="font-bold text-xs text-gray-900 truncate">{match.awayTeam.shortName}</span>
-             <img src={match.awayTeam.logo} alt={match.awayTeam.shortName} className="h-8 w-8 object-contain" />
-          </div>
+        {/* Teams & Score */}
+        <div className="flex items-center gap-3 flex-1">
+           <div className="flex flex-col items-center gap-1">
+              <img src={match.homeTeam.logo} alt={match.homeTeam.shortName} className="h-6 w-6 object-contain" />
+           </div>
+           
+           <div className="text-center min-w-[40px]">
+              {isFinal || isLive ? (
+                 <span className="block font-black text-sm text-gray-900 leading-none">{match.scoreHome}:{match.scoreAway}</span>
+              ) : (
+                 <span className="block font-bold text-xs text-gray-400">VS</span>
+              )}
+           </div>
+
+           <div className="flex flex-col items-center gap-1">
+              <img src={match.awayTeam.logo} alt={match.awayTeam.shortName} className="h-6 w-6 object-contain" />
+           </div>
+           
+           {/* Names (Truncated) */}
+           <div className="flex flex-col ml-1 border-l border-gray-100 pl-2">
+              <span className="text-[10px] font-bold text-gray-900 leading-tight truncate w-[60px]">{match.homeTeam.shortName}</span>
+              <span className="text-[10px] font-bold text-gray-900 leading-tight truncate w-[60px]">{match.awayTeam.shortName}</span>
+           </div>
+        </div>
+
+        {/* Status/Time Indicator */}
+        <div className="flex flex-col items-end border-l border-gray-100 pl-2 ml-1 min-w-[50px]">
+           <span className="text-[9px] font-bold text-gray-400 uppercase truncate max-w-[50px]">{match.category}</span>
+           {isLive ? (
+             <span className="text-[9px] font-black text-slovak-red animate-pulse">LIVE</span>
+           ) : isFinal ? (
+             <span className="text-[9px] font-bold text-gray-800">FT</span>
+           ) : (
+             <span className="text-[9px] font-bold text-slovak-blue">{match.time}</span>
+           )}
         </div>
       </div>
     );

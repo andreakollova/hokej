@@ -1,82 +1,117 @@
-import React from 'react';
-import { MATCHES } from '../constants';
-import { Calendar, MapPin, Ticket, PlayCircle } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { NEWS } from '../constants';
+import { Calendar, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 
 export const Hero: React.FC = () => {
-  // Find a featureable match (e.g. upcoming Men's game or Live)
-  const featuredMatch = MATCHES.find(m => 
-    (m.status === 'UPCOMING' || m.status === 'LIVE') && 
-    (m.category === 'MUŽI')
-  ) || MATCHES[0];
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const slides = NEWS.slice(0, 3);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % slides.length);
+    }, 6000);
+    return () => clearInterval(timer);
+  }, [slides.length]);
+
+  const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % slides.length);
+  const prevSlide = () => setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
 
   return (
-    <div className="relative w-full h-[600px] md:h-[700px] text-white overflow-hidden rounded-b-[40px] md:rounded-b-[60px] shadow-2xl mx-auto max-w-[1920px]">
+    <div className="relative w-full h-[500px] md:h-[650px] text-white overflow-hidden rounded-b-[40px] md:rounded-b-[60px] shadow-2xl mx-auto max-w-[1920px] group bg-slovak-blue">
       
-      {/* Background Image - Field Hockey Theme */}
-      <div 
-        className="absolute inset-0 bg-cover bg-center transition-transform duration-[20s] hover:scale-105"
-        style={{ backgroundImage: 'url("https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?q=80&w=2000&auto=format&fit=crop")' }}
-      ></div>
-      
-      {/* Gradient Overlays */}
-      <div className="absolute inset-0 bg-gradient-to-t from-slovak-blue via-slovak-blue/60 to-transparent"></div>
-      <div className="absolute inset-0 bg-gradient-to-r from-slovak-blue/80 to-transparent opacity-80"></div>
-      
-      <div className="relative container mx-auto px-6 h-full flex flex-col justify-end pb-20 md:pb-32">
-        
-        {/* Match Badge */}
-        <div className="self-start mb-6 animate-in fade-in slide-in-from-bottom-4 duration-700">
-           <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 px-4 py-1.5 rounded-full text-sm font-bold uppercase tracking-wider shadow-lg">
-             {featuredMatch.status === 'LIVE' && <span className="w-2 h-2 bg-slovak-red rounded-full animate-pulse"></span>}
-             <span>{featuredMatch.competition}</span>
-           </div>
+      {/* Background Slides */}
+      {slides.map((slide, index) => (
+        <div 
+          key={slide.id}
+          className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
+            index === currentSlide ? 'opacity-100 z-10' : 'opacity-0 z-0'
+          }`}
+        >
+            {/* Image Layer */}
+            <div 
+              className="absolute inset-0 bg-cover bg-center transform transition-transform duration-[10s] scale-105 origin-top"
+              style={{ backgroundImage: `url("${slide.imageUrl}")` }}
+            ></div>
+            
+            {/* Identity Typography Layer (LIGA) - Behind content but over image */}
+            <div className="absolute inset-0 overflow-hidden pointer-events-none flex items-center justify-center">
+                 <span className="text-[25vw] font-black text-white/10 tracking-tighter select-none mix-blend-overlay blur-sm scale-150 transform -rotate-6">
+                    LIGA
+                 </span>
+            </div>
+            
+            {/* Blue Overlay Layer */}
+            <div className="absolute inset-0 bg-slovak-blue/80 mix-blend-multiply"></div>
+            
+            {/* Gradients for readability */}
+            <div className="absolute inset-0 bg-gradient-to-t from-slovak-blue via-transparent to-transparent opacity-90"></div>
+            <div className="absolute inset-0 bg-gradient-to-r from-slovak-blue/60 to-transparent"></div>
         </div>
+      ))}
 
-        {/* Title Section */}
-        <div className="max-w-4xl space-y-4 mb-8 animate-in fade-in slide-in-from-bottom-6 duration-700 delay-100">
-           <div className="flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-8">
-              {/* Home */}
-              <div className="flex items-center gap-4">
-                 <img src={featuredMatch.homeTeam.logo} alt={featuredMatch.homeTeam.name} className="w-20 h-20 md:w-24 md:h-24 object-contain drop-shadow-[0_0_15px_rgba(255,255,255,0.3)] bg-white/10 rounded-full p-2" />
-                 <span className="text-4xl md:text-6xl font-black tracking-tight leading-none">{featuredMatch.homeTeam.shortName}</span>
+      {/* Content Layer */}
+      <div className="relative z-20 container mx-auto px-6 md:px-12 h-full flex flex-col justify-end pb-20 md:pb-28">
+         {slides.map((slide, index) => (
+           <div 
+             key={slide.id} 
+             className={`${index === currentSlide ? 'block' : 'hidden'} max-w-5xl space-y-6 animate-in fade-in slide-in-from-bottom-8 duration-700`}
+           >
+              <div className="flex items-center gap-3 mb-4">
+                 <span className="bg-slovak-red text-white px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest shadow-lg shadow-red-900/20">
+                    {slide.category}
+                 </span>
+                 <span className="flex items-center gap-2 text-gray-300 font-medium text-sm bg-white/10 px-3 py-1.5 rounded-full border border-white/10 backdrop-blur-sm">
+                    <Calendar size={14} /> {slide.date}
+                 </span>
               </div>
-              
-              <span className="text-4xl md:text-6xl font-black text-slovak-red italic hidden md:block">vs</span>
-              <span className="text-2xl font-black text-slovak-red italic md:hidden">VS</span>
 
-              {/* Away */}
-               <div className="flex items-center gap-4">
-                 <span className="text-4xl md:text-6xl font-black tracking-tight leading-none text-right md:text-left">{featuredMatch.awayTeam.shortName}</span>
-                 <img src={featuredMatch.awayTeam.logo} alt={featuredMatch.awayTeam.name} className="w-20 h-20 md:w-24 md:h-24 object-contain drop-shadow-[0_0_15px_rgba(255,255,255,0.3)] bg-white/10 rounded-full p-2" />
+              <h1 className="text-4xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-none text-white drop-shadow-xl">
+                {slide.title}
+              </h1>
+
+              <p className="text-lg md:text-2xl text-blue-100 font-medium leading-relaxed max-w-3xl line-clamp-2 border-l-4 border-slovak-red pl-6">
+                {slide.snippet}
+              </p>
+
+              <div className="pt-8 flex flex-wrap gap-4">
+                 <button className="bg-white text-slovak-blue hover:bg-slovak-red hover:text-white px-10 py-5 rounded-full font-black text-lg transition-all shadow-xl flex items-center gap-3 group/btn transform hover:-translate-y-1">
+                    Čítať článok 
+                    <ArrowRight size={22} className="group-hover/btn:translate-x-1 transition-transform" />
+                 </button>
               </div>
            </div>
+         ))}
+      </div>
 
-           <div className="flex flex-wrap items-center gap-6 text-gray-200 font-medium text-lg mt-6">
-             <div className="flex items-center gap-2">
-                <Calendar className="text-slovak-red" size={20} />
-                <span>{featuredMatch.date === 'Dnes' ? 'Dnes' : featuredMatch.date}, {featuredMatch.time}</span>
-             </div>
-             <div className="flex items-center gap-2">
-                <MapPin className="text-slovak-red" size={20} />
-                <span>{featuredMatch.venue}</span>
-             </div>
-           </div>
-        </div>
-
-        {/* Buttons */}
-        <div className="flex flex-wrap gap-4 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-200">
-          <button className="group relative bg-slovak-red hover:bg-red-700 text-white px-8 py-4 rounded-full font-bold text-lg transition-all shadow-lg shadow-red-900/30 hover:shadow-red-900/50 flex items-center gap-3 overflow-hidden">
-            <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
-            <Ticket size={20} />
-            <span className="relative">Informácie o zápase</span>
-          </button>
+      {/* Navigation Controls */}
+      <div className="absolute bottom-10 right-6 md:right-12 z-30 flex items-center gap-8">
+          <div className="flex gap-2.5">
+             {slides.map((_, idx) => (
+               <button 
+                 key={idx}
+                 onClick={() => setCurrentSlide(idx)}
+                 className={`h-2.5 rounded-full transition-all duration-500 ease-out ${idx === currentSlide ? 'w-16 bg-slovak-red' : 'w-3 bg-white/30 hover:bg-white'}`}
+                 aria-label={`Go to slide ${idx + 1}`}
+               />
+             ))}
+          </div>
           
-          <button className="bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/30 text-white px-8 py-4 rounded-full font-bold text-lg transition-all flex items-center gap-3">
-             <PlayCircle size={20} />
-             <span>Sledovať LIVE</span>
-          </button>
-        </div>
-
+          <div className="flex gap-3">
+            <button 
+              onClick={prevSlide} 
+              className="w-14 h-14 rounded-full flex items-center justify-center bg-white/10 hover:bg-white/20 border border-white/20 backdrop-blur text-white transition-all hover:scale-105 active:scale-95"
+              aria-label="Previous slide"
+            >
+              <ChevronLeft size={28} />
+            </button>
+            <button 
+              onClick={nextSlide} 
+              className="w-14 h-14 rounded-full flex items-center justify-center bg-white text-slovak-blue hover:bg-slovak-red hover:text-white border border-transparent shadow-lg transition-all hover:scale-105 active:scale-95"
+              aria-label="Next slide"
+            >
+              <ChevronRight size={28} />
+            </button>
+          </div>
       </div>
     </div>
   );
