@@ -281,7 +281,10 @@ export const INSTAGRAM_POSTS: InstagramPost[] = [
   { id: 'i4', imageUrl: 'https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?q=80&w=400&h=400&fit=crop', caption: 'Ďakujeme fanúšikom za podporu. 🙌', likes: 330 },
 ];
 
+// YouTube Shorts - replaced standard videos
 export const VIDEOS: VideoItem[] = [
-  { id: 'v1', title: 'Highlighty: Rača vs Šenkvice', duration: '3:45', thumbnail: 'https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?q=80&w=600&fit=crop' },
-  { id: 'v2', title: 'Tréningový kemp U18', duration: '2:20', thumbnail: 'https://images.unsplash.com/photo-1566492031773-4f4e44671857?q=80&w=600&fit=crop' },
+  { id: 'fat3tI2IWkY', title: 'Hockey Skills 1', duration: '', thumbnail: '' },
+  { id: 'EfrpwlCCLAc', title: 'Hockey Skills 2', duration: '', thumbnail: '' },
+  { id: 'x0wS94PLaQc', title: 'Hockey Skills 3', duration: '', thumbnail: '' },
+  { id: 'tznyHAGe5CE', title: 'Hockey Skills 4', duration: '', thumbnail: '' },
 ];

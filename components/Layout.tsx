@@ -355,52 +355,71 @@ const Layout: React.FC<LayoutProps> = ({ children, currentView, onChangeView }) 
         {children}
       </main>
 
-      {/* Footer */}
-      <footer className="bg-white border-t border-gray-200 mt-20">
-        <div className="container mx-auto px-6 py-12">
-           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
-              <div className="col-span-1 md:col-span-2">
-                 <div className="flex items-center gap-2 mb-4">
-                    <div className="w-10 h-10 bg-slovak-blue rounded-lg flex items-center justify-center">
-                        <span className="text-white text-sm font-bold">SK</span>
-                    </div>
-                    <div>
-                        <span className="block font-black text-gray-900 leading-none">SZPH</span>
-                        <span className="text-[10px] uppercase font-bold text-gray-400">Slovak Hockey</span>
-                    </div>
+      {/* Footer - Redesigned */}
+      <footer className="bg-[#0B2144] border-t border-white/10 mt-20 text-white rounded-t-[30px] relative z-40 overflow-hidden">
+        <div className="container mx-auto px-6 py-16">
+           <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
+              
+              {/* Column 1: Identity & Contact */}
+              <div className="col-span-1">
+                 <div className="flex items-center gap-2 mb-6">
+                    <img 
+                      src="https://szph.sk/wp-content/uploads/2025/11/logo-field-hockey.png" 
+                      alt="SZPH Logo" 
+                      className="w-40 h-auto object-contain brightness-0 invert"
+                    />
                  </div>
-                 <p className="text-gray-500 text-sm max-w-sm leading-relaxed">
+                 <p className="text-white text-sm max-w-sm leading-relaxed mb-8 font-medium opacity-80">
                    Oficiálna stránka slovenského pozemného hokeja. Sledujte zápasy, výsledky a novinky z domácej scény aj reprezentácie.
                  </p>
-                 <a href="mailto:szph@szph.sk" className="block mt-4 text-slovak-red font-bold hover:underline">szph@szph.sk</a>
+                 
+                 <div className="space-y-4 text-sm text-white font-medium">
+                   <a href="mailto:szph@szph.sk" className="flex items-center gap-3 hover:text-white hover:opacity-100 opacity-80 transition-all group">
+                     <div className="w-2 h-2 rounded-full bg-slovak-red group-hover:scale-125 transition-transform"></div> szph@szph.sk
+                   </a>
+                   <a href="tel:+421918555519" className="flex items-center gap-3 hover:text-white hover:opacity-100 opacity-80 transition-all group">
+                      <div className="w-2 h-2 rounded-full bg-slovak-red group-hover:scale-125 transition-transform"></div> +421 918 555 519
+                   </a>
+                 </div>
               </div>
               
-              <div>
-                <h4 className="font-bold text-gray-900 mb-4 uppercase text-xs tracking-wider">Rýchle odkazy</h4>
-                <ul className="space-y-3 text-sm text-gray-500 font-medium">
-                   <li><a href="#" className="hover:text-slovak-blue transition-colors">Reprezentácia</a></li>
-                   <li><a href="#" className="hover:text-slovak-blue transition-colors">Súťaže</a></li>
-                   <li><a href="#" className="hover:text-slovak-blue transition-colors">Mládež</a></li>
-                   <li><a href="#" className="hover:text-slovak-blue transition-colors">Dokumenty</a></li>
+              {/* Column 2: Dôležité Odkazy */}
+              <div className="col-span-1 md:pl-8">
+                <h4 className="font-black text-white mb-8 uppercase text-sm tracking-widest border-b border-white/10 pb-4 inline-block">DÔLEŽITÉ ODKAZY</h4>
+                <ul className="space-y-4 text-sm text-white font-bold opacity-80">
+                   <li><a href="#" className="hover:text-white hover:opacity-100 hover:pl-2 transition-all block">Konferencia</a></li>
+                   <li><a href="#" className="hover:text-white hover:opacity-100 hover:pl-2 transition-all block">Kontrolór</a></li>
+                   <li><a href="#" className="hover:text-white hover:opacity-100 hover:pl-2 transition-all block">Čerpanie dotácií MŠVVaŠ</a></li>
+                   <li><a href="#" className="hover:text-white hover:opacity-100 hover:pl-2 transition-all block">Stanovy a predpisy</a></li>
+                   <li><a href="#" className="hover:text-white hover:opacity-100 hover:pl-2 transition-all block">Doping v športe</a></li>
+                   <li><a href="#" className="hover:text-white hover:opacity-100 hover:pl-2 transition-all block">Výsledky hospodárenia</a></li>
                 </ul>
               </div>
 
-              <div>
-                <h4 className="font-bold text-gray-900 mb-4 uppercase text-xs tracking-wider">Kontakt</h4>
-                <ul className="space-y-3 text-sm text-gray-500 font-medium">
-                   <li className="flex items-start gap-2"><div className="w-1.5 h-1.5 rounded-full bg-slovak-red mt-1.5"></div> Junácka 6, 832 80 Bratislava</li>
-                   <li className="flex items-start gap-2"><div className="w-1.5 h-1.5 rounded-full bg-slovak-red mt-1.5"></div> +421 900 123 456</li>
-                </ul>
+              {/* Column 3: Funding Logos */}
+              <div className="col-span-1 flex flex-col items-start md:items-start">
+                <h4 className="font-black text-white mb-8 uppercase text-sm tracking-widest border-b border-white/10 pb-4 inline-block">Príspevok uznanému športu</h4>
+                <div className="flex flex-col gap-8 w-full">
+                    <div className="bg-white rounded-2xl p-4 w-full max-w-[280px] flex items-center justify-center">
+                       <img src="https://szph.sk/wp-content/uploads/2025/03/rozpocet-2025-logo.jpg" className="w-full h-auto object-contain" alt="Rozpočet 2025" />
+                    </div>
+                    <div className="bg-white rounded-xl p-3 w-full max-w-[280px] flex items-center justify-center">
+                        <img src="https://szph.sk/wp-content/uploads/2024/08/Screenshot-2024-05-24-133021-470x189-1.png" className="h-16 w-full object-contain" alt="Ministerstvo" />
+                    </div>
+                    <div className="bg-white rounded-xl p-3 w-full max-w-[280px] flex items-center justify-center">
+                         <img src="https://szph.sk/wp-content/uploads/2024/08/federacia.png" className="h-16 w-full object-contain" alt="Federácia" />
+                    </div>
+                </div>
               </div>
            </div>
            
-           <div className="pt-8 border-t border-gray-100 flex flex-col md:flex-row justify-between items-center gap-4">
-              <div className="text-sm text-gray-400 font-medium">
-                © 2024 SZPH. Všetky práva vyhradené.
+           <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4">
+              <div className="text-sm text-white font-medium opacity-60">
+                © 2025 SZPH. Všetky práva vyhradené.
               </div>
-              <div className="flex gap-6 text-sm text-gray-500 font-bold">
-                 <a href="#" className="hover:text-slovak-red transition-colors">Ochrana súkromia</a>
-                 <a href="#" className="hover:text-slovak-red transition-colors">Cookies</a>
+              <div className="flex gap-8 text-sm text-white font-bold opacity-80">
+                 <a href="#" className="hover:opacity-100 transition-opacity">Ochrana súkromia</a>
+                 <a href="#" className="hover:opacity-100 transition-opacity">Cookies</a>
               </div>
            </div>
         </div>

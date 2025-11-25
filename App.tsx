@@ -174,7 +174,7 @@ const App: React.FC = () => {
                                {nextNationalMatch.homeTeam.shortName} vs. {nextNationalMatch.awayTeam.shortName}
                             </div>
                             <div className="flex items-center gap-1 text-xs text-red-100 font-medium bg-black/20 px-2 py-1 rounded w-fit">
-                               <MapPin size={12} /> {nextNationalMatch.venue}
+                               <MapPin size={12} /> {nextNationalMatch.venue.split(',')[0]}
                             </div>
                          </div>
                          <div className="ml-auto text-xl font-black">
@@ -206,20 +206,21 @@ const App: React.FC = () => {
         </div>
 
         {/* 2. News */}
-        <div className="py-8">
+        <div className="py-4">
            <NewsSection />
         </div>
 
         {/* 3. 10 Match List Table */}
-        <div className="container mx-auto px-4 md:px-8 mb-20">
+        <div className="container mx-auto px-4 md:px-8 mb-20 -mt-2">
            <MatchListTable matches={upcomingMatchesTable} />
         </div>
         
-        {/* 4. Social Media (Instagram/Video) */}
+        {/* 4. Partners (Moved UP) */}
+        <Partners />
+
+        {/* 5. Social Media (Moved DOWN - Includes Instagram) */}
         <SocialMedia />
 
-        {/* 5. Partners */}
-        <Partners />
       </div>
     );
   };
