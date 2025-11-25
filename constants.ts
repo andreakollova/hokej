@@ -57,6 +57,13 @@ export const TEAM_GBR: Team = {
   logo: 'https://flagcdn.com/w320/gb.png'
 };
 
+export const TEAM_ENG: Team = {
+  id: 'eng',
+  name: 'Anglicko',
+  shortName: 'ENG',
+  logo: 'https://flagcdn.com/w320/gb-eng.png'
+};
+
 // Matches - Expanded to have at least 10 upcoming + results
 export const MATCHES: Match[] = [
   // LIVE
@@ -148,14 +155,14 @@ export const MATCHES: Match[] = [
     category: 'ŽENY',
     status: MatchStatus.UPCOMING
   },
-  // Next National Match - Updated to Great Britain
+  // Next National Match - Updated to England
   {
     id: 'm_next_6',
     homeTeam: TEAM_SVK,
-    awayTeam: TEAM_GBR,
-    date: '20.03.2025',
+    awayTeam: TEAM_ENG,
+    date: '17.03.2026',
     time: '18:00',
-    venue: 'Bratislava',
+    venue: 'Durham, Anglicko',
     competition: 'Kvalifikácia ME',
     category: 'ŽENY',
     status: MatchStatus.UPCOMING

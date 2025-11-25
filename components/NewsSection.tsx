@@ -1,9 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { NEWS } from '../constants';
-import { ArrowRight, Clock, TrendingUp, Share2, ShoppingBag } from 'lucide-react';
+import { ArrowRight, Clock, TrendingUp, Share2, ShoppingBag, ChevronLeft, ChevronRight } from 'lucide-react';
 
 export const NewsSection: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'Všetky' | 'Reprezentácia' | 'Liga'>('Všetky');
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  // Scroll Handler for Trending Strip
+  const scrollTrending = (direction: 'left' | 'right') => {
+    if (scrollContainerRef.current) {
+      const { current } = scrollContainerRef;
+      const scrollAmount = 320; // Approx one card width + gap
+      if (direction === 'left') {
+        current.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+      } else {
+        current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+      }
+    }
+  };
 
   // Filter Logic
   const filteredNews = NEWS.filter((item) => {
@@ -15,16 +29,15 @@ export const NewsSection: React.FC = () => {
 
   const featuredNews = filteredNews[0];
   const trendingNews = filteredNews.slice(1, 6);
-  // Reduced slice to leave room for the banner
-  const recentNews = filteredNews.slice(6, 11);
+  const recentNews = filteredNews.slice(6, 12);
 
   return (
-    <div className="container mx-auto px-4 md:px-8 py-12 md:py-20">
+    <div className="container mx-auto px-4 md:px-8 py-6 md:py-10">
       {/* Header with Toggles */}
-      <div className="flex flex-col md:flex-row justify-between items-end mb-10 gap-6">
+      <div className="flex flex-col md:flex-row justify-between items-end mb-4 gap-6">
          <div>
-            <span className="text-slovak-red font-bold text-xs uppercase tracking-widest mb-2 block">Čo sa deje</span>
-            <h2 className="text-4xl md:text-5xl font-black tracking-tighter text-slovak-blue mb-6">Aktuality</h2>
+            <span className="text-slovak-red font-bold text-xs uppercase tracking-widest mb-2 block">ZO SVETA POZEMNÉHO HOKEJA</span>
+            <h2 className="text-4xl md:text-5xl font-black tracking-tighter text-slovak-blue mb-4">Aktuality</h2>
             
             {/* Toggles */}
             <div className="flex flex-wrap gap-2">
@@ -53,12 +66,12 @@ export const NewsSection: React.FC = () => {
         <div className="flex flex-col gap-12 animate-in fade-in duration-500">
           
           {/* ROW 1: Featured (Left) & Recent (Right) */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-8">
             
             {/* Left: Featured Hero Card */}
-            <div className="lg:col-span-8">
+            <div className="lg:col-span-8 flex flex-col">
               {featuredNews && (
-                <div className="relative h-[500px] md:h-[600px] w-full rounded-xl overflow-hidden group cursor-pointer shadow-2xl shadow-blue-900/20 ring-1 ring-black/5">
+                <div className="relative h-full min-h-[500px] md:min-h-[600px] w-full rounded-xl overflow-hidden group cursor-pointer shadow-2xl shadow-blue-900/20 ring-1 ring-black/5">
                   <img 
                     src={featuredNews.imageUrl} 
                     alt={featuredNews.title}
@@ -96,8 +109,8 @@ export const NewsSection: React.FC = () => {
             </div>
 
             {/* Right: Recent News List */}
-            <div className="lg:col-span-4">
-              <div className="bg-white rounded-xl p-6 md:p-8 shadow-[0_20px_50px_rgba(0,0,0,0.05)] border border-gray-100 h-full">
+            <div className="lg:col-span-4 flex flex-col h-full">
+              <div className="bg-white rounded-xl p-6 md:p-8 shadow-[0_20px_50px_rgba(0,0,0,0.05)] border border-gray-100 h-full flex flex-col">
                   <div className="flex items-center justify-between mb-6">
                     <h3 className="font-black text-xl text-slovak-blue flex items-center gap-2">
                       Najnovšie
@@ -106,7 +119,7 @@ export const NewsSection: React.FC = () => {
                     <button className="p-2 hover:bg-gray-50 rounded-full transition-colors"><Share2 size={16} className="text-gray-400" /></button>
                   </div>
                   
-                  <div className="flex flex-col gap-5 relative">
+                  <div className="flex flex-col gap-4 relative flex-1">
                     {/* Timeline Line */}
                     <div className="absolute left-[11px] top-2 bottom-2 w-[2px] bg-gray-100"></div>
 
@@ -134,7 +147,7 @@ export const NewsSection: React.FC = () => {
                     ))}
                   </div>
                   
-                  <button className="w-full mt-8 py-3 rounded-lg bg-gray-50 text-gray-600 text-xs font-black uppercase tracking-widest hover:bg-slovak-blue hover:text-white transition-all border border-gray-100 shadow-sm hover:shadow-lg">
+                  <button className="w-full mt-6 py-3 rounded-lg bg-gray-50 text-gray-600 text-xs font-black uppercase tracking-widest hover:bg-slovak-blue hover:text-white transition-all border border-gray-100 shadow-sm hover:shadow-lg">
                     Zobraziť viac správ
                   </button>
               </div>
@@ -154,11 +167,25 @@ export const NewsSection: React.FC = () => {
                       <h4 className="text-lg font-black text-gray-800 uppercase tracking-tight">Neprehliadnite</h4>
                   </div>
                   <div className="flex gap-2">
-                      <button className="p-2 rounded-full bg-gray-100 text-gray-400 hover:bg-gray-200"><ArrowRight size={16} /></button>
+                      <button 
+                        onClick={() => scrollTrending('left')}
+                        className="p-2 rounded-full bg-gray-100 text-gray-400 hover:bg-gray-200 transition-colors"
+                      >
+                        <ChevronLeft size={16} />
+                      </button>
+                      <button 
+                        onClick={() => scrollTrending('right')}
+                        className="p-2 rounded-full bg-gray-100 text-gray-400 hover:bg-gray-200 transition-colors"
+                      >
+                        <ArrowRight size={16} />
+                      </button>
                   </div>
                 </div>
                 
-                <div className="flex overflow-x-auto pb-8 -mx-4 px-4 md:mx-0 md:px-0 gap-5 snap-x hide-scrollbar">
+                <div 
+                  ref={scrollContainerRef}
+                  className="flex overflow-x-auto pb-8 -mx-4 px-4 md:mx-0 md:px-0 gap-5 snap-x hide-scrollbar scroll-smooth"
+                >
                   {trendingNews.map((item, index) => (
                     <div 
                       key={item.id} 

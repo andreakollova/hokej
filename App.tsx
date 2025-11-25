@@ -18,8 +18,9 @@ const App: React.FC = () => {
   const [currentView, setCurrentView] = useState('home');
 
   // 1. Filter ONLY National Team Matches
+  // Strictly filter for matches involving 'svk' team ID, to avoid showing Club matches that might have category='ŽENY'
   const nationalMatches = MATCHES.filter(m => 
-    m.homeTeam.id === 'svk' || m.awayTeam.id === 'svk' || m.category === 'REPRE' || m.category === 'ŽENY'
+    m.homeTeam.id === 'svk' || m.awayTeam.id === 'svk'
   );
 
   // 2. Find Last Result (Status FINAL)
@@ -173,7 +174,7 @@ const App: React.FC = () => {
                                {nextNationalMatch.homeTeam.shortName} vs. {nextNationalMatch.awayTeam.shortName}
                             </div>
                             <div className="flex items-center gap-1 text-xs text-red-100 font-medium bg-black/20 px-2 py-1 rounded w-fit">
-                               <MapPin size={12} /> {nextNationalMatch.venue}, Slovensko
+                               <MapPin size={12} /> {nextNationalMatch.venue}
                             </div>
                          </div>
                          <div className="ml-auto text-xl font-black">
