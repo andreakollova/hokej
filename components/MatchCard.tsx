@@ -130,7 +130,7 @@ export const MatchCard: React.FC<MatchCardProps> = ({ match, variant = 'row' }) 
               <div className="flex-1 flex flex-col md:flex-row items-center justify-end gap-3 md:gap-6 text-center md:text-right">
                  <span className="hidden md:block text-xl font-bold text-gray-900 tracking-tight">{match.homeTeam.name}</span>
                  <span className="md:hidden text-base font-bold text-gray-900">{match.homeTeam.shortName}</span>
-                 <div className="w-16 h-16 md:w-20 md:h-20 p-2 bg-white rounded-2xl shadow-sm border border-gray-50 flex items-center justify-center">
+                 <div className="w-24 h-24 md:w-32 md:h-32 p-4 bg-white rounded-3xl shadow-sm border border-gray-50 flex items-center justify-center">
                     <img src={match.homeTeam.logo} className="w-full h-full object-contain" alt={match.homeTeam.name} />
                  </div>
               </div>
@@ -144,7 +144,7 @@ export const MatchCard: React.FC<MatchCardProps> = ({ match, variant = 'row' }) 
 
               {/* Away Team */}
               <div className="flex-1 flex flex-col-reverse md:flex-row items-center justify-start gap-3 md:gap-6 text-center md:text-left">
-                 <div className="w-16 h-16 md:w-20 md:h-20 p-2 bg-white rounded-2xl shadow-sm border border-gray-50 flex items-center justify-center">
+                 <div className="w-24 h-24 md:w-32 md:h-32 p-4 bg-white rounded-3xl shadow-sm border border-gray-50 flex items-center justify-center">
                     <img src={match.awayTeam.logo} className="w-full h-full object-contain" alt={match.awayTeam.name} />
                  </div>
                  <span className="hidden md:block text-xl font-bold text-gray-900 tracking-tight">{match.awayTeam.name}</span>

@@ -14,7 +14,7 @@ export const TEAM_RACA: Team = {
   id: 'raca', 
   name: 'KPH Rača Bratislava', 
   shortName: 'RAČA', 
-  logo: 'https://ui-avatars.com/api/?name=Raca&background=0B2144&color=fff&size=256&bold=true&length=4&font-size=0.33', 
+  logo: 'https://szph.sk/wp-content/uploads/2024/09/Raca-logo-70x58-1.png', 
   record: '12-2' 
 };
 
@@ -22,7 +22,7 @@ export const TEAM_HOKO: Team = {
   id: 'hoko', 
   name: 'KPH HOKO Zlaté Moravce', 
   shortName: 'HOKO', 
-  logo: 'https://ui-avatars.com/api/?name=Hoko&background=15803d&color=fff&size=256&bold=true&length=4&font-size=0.33', 
+  logo: 'https://szph.sk/wp-content/uploads/2024/09/logo-KPH-HOKO-1-Photoroom.png', 
   record: '8-6' 
 };
 
@@ -30,7 +30,7 @@ export const TEAM_HAS: Team = {
   id: 'has', 
   name: 'HAŠ Akadémia Šenkvice', 
   shortName: 'HAŠ', 
-  logo: 'https://ui-avatars.com/api/?name=HAS&background=f97316&color=fff&size=256&bold=true&length=3&font-size=0.33', 
+  logo: 'https://szph.sk/wp-content/uploads/2024/09/3949307b-0db4-45ed-a37a-e87dc843fbd7-300x285.jpeg', 
   record: '5-9' 
 };
 
@@ -38,8 +38,23 @@ export const TEAM_SEN: Team = {
   id: 'sen', 
   name: 'ŠK 1952 Šenkvice', 
   shortName: 'ŠEN', 
-  logo: 'https://ui-avatars.com/api/?name=Senk&background=EF1C26&color=fff&size=256&bold=true&length=4&font-size=0.33', 
+  logo: 'https://szph.sk/wp-content/uploads/2024/09/Logo-SK-Senkvice-59x70-1.png', 
   record: '10-4' 
+};
+
+// New International Teams
+export const TEAM_POR: Team = {
+  id: 'por',
+  name: 'Portugalsko',
+  shortName: 'POR',
+  logo: 'https://flagcdn.com/w320/pt.png'
+};
+
+export const TEAM_GBR: Team = {
+  id: 'gbr',
+  name: 'Veľká Británia',
+  shortName: 'GBR',
+  logo: 'https://flagcdn.com/w320/gb.png'
 };
 
 // Matches - Expanded to have at least 10 upcoming + results
@@ -60,19 +75,19 @@ export const MATCHES: Match[] = [
     period: '3. štvrtina',
     timeRemaining: '08:45'
   },
-  // LAST RESULT (For the widget)
+  // LAST RESULT (For the widget) - Updated to Portugal
   {
     id: 'm_last_res',
     homeTeam: TEAM_SVK,
-    awayTeam: TEAM_RACA, // Dummy opponent
-    date: '10.03.',
+    awayTeam: TEAM_POR, 
+    date: '10.03.2025',
     time: '18:00',
     venue: 'Viedeň, Rakúsko',
     competition: 'Medzinárodný Priateľský',
     category: 'MUŽI',
     status: MatchStatus.FINAL,
     scoreHome: 3,
-    scoreAway: 4,
+    scoreAway: 1,
     period: 'Koniec' 
   },
   // UPCOMING LIST (Need 10+)
@@ -133,15 +148,16 @@ export const MATCHES: Match[] = [
     category: 'ŽENY',
     status: MatchStatus.UPCOMING
   },
+  // Next National Match - Updated to Great Britain
   {
     id: 'm_next_6',
     homeTeam: TEAM_SVK,
-    awayTeam: TEAM_HOKO, // Dummy
-    date: '20.03.',
+    awayTeam: TEAM_GBR,
+    date: '20.03.2025',
     time: '18:00',
     venue: 'Bratislava',
-    competition: 'Prípravný Zápas',
-    category: 'REPRE',
+    competition: 'Kvalifikácia ME',
+    category: 'ŽENY',
     status: MatchStatus.UPCOMING
   },
   {
@@ -202,9 +218,30 @@ export const PLAYERS: Player[] = [
 
 // News - Using reliable field hockey / sport field images
 export const NEWS: NewsItem[] = [
-  { id: 'n1', title: 'Derby o Bratislavu: Rača vyzve Šenkvice', snippet: 'Už tento víkend nás čaká šláger kola Extraligy mužov. Oba tímy sú v skvelej forme a sľubujú napínavý súboj pred plnými tribúnami.', date: 'Pred 2 hodinami', category: 'Extraliga Muži', imageUrl: 'https://images.unsplash.com/photo-1589487391730-58f20eb2c308?q=80&w=800&auto=format&fit=crop' }, // Field/Ball
-  { id: 'n2', title: 'Mládežnícky turnaj U10 v Zlatých Moravciach', snippet: 'Najmenšie nádeje slovenského pozemného hokeja predviedli skvelé výkony. Turnaja sa zúčastnilo 8 tímov.', date: 'Včera', category: 'Mládež', imageUrl: 'https://images.unsplash.com/photo-1511886929837-354d827aae26?q=80&w=800&auto=format&fit=crop' }, // Kids/Running
-  { id: 'n3', title: 'Reprezentácia začína prípravu na kvalifikáciu', snippet: 'Tréner oznámil širšiu nomináciu na nadchádzajúci cyklus. V tíme sa objavilo viacero nových tvárí.', date: '15. Máj 2024', category: 'Reprezentácia', imageUrl: 'https://images.unsplash.com/photo-1526676037777-05a232554f77?q=80&w=800&auto=format&fit=crop' }, // Team Huddle
+  { 
+    id: 'n1', 
+    title: 'Dievčatá reprezentácie do 15 rokov ovládli Suda Cup 2025 v Hradci Králové!', 
+    snippet: 'Na Youth Leadership Festivale EuroHockey Institute v nemeckom Mönchengladbachu sa v auguste stretli desiatky mladých hokejových nadšencov z celej Európy. Počas niekoľkých dní absolvovali intenzívny program workshopov a diskusií, zameraných na rozvoj líderských zručností, inklúziu, marketing či duševné zdravie.', 
+    date: 'Pred 2 hodinami', 
+    category: 'Reprezentácia', 
+    imageUrl: 'https://szph.sk/wp-content/uploads/2025/11/MG_8015-1-773x380.jpg' 
+  },
+  { 
+    id: 'n2', 
+    title: 'Zhodnotenie turnaja chlapcov do 18 rokov na Majstrovstvách Európy III v Chorvátsku', 
+    snippet: 'Slovenská reprezentácia chlapcov do 18 rokov sa v júly predstavila na turnaji EuroHockey Championship III v chorvátskej Sveti Ivan Zelina. Pod vedením trénera Jonathana Sachseho ukázali veľkú bojovnosť, získali cenné skúsenosti a obsadili štvrté miesto.', 
+    date: 'Včera', 
+    category: 'Reprezentácia', 
+    imageUrl: 'https://szph.sk/wp-content/uploads/2025/08/IMG_7852-773x380.jpg' 
+  },
+  { 
+    id: 'n3', 
+    title: 'EuroHockey Youth Festival 2025 – Budúcnosť európskeho hokeja v rukách mladých lídrov', 
+    snippet: 'Na Youth Leadership Festivale EuroHockey Institute v nemeckom Mönchengladbachu sa v auguste stretli desiatky mladých hokejových nadšencov z celej Európy. Počas niekoľkých dní absolvovali intenzívny program workshopov a diskusií, zameraných na rozvoj líderských zručností, inklúziu, marketing či duševné zdravie.', 
+    date: 'Pred 2 dňami', 
+    category: 'Rozvoj', 
+    imageUrl: 'https://szph.sk/wp-content/uploads/2025/08/bd48622a-89fc-4d51-b23f-a220747d75f0-scaled-e1756108529745-773x380.jpg' 
+  },
   { id: 'n4', title: 'Nové pravidlá pre sezónu 2024/2025', snippet: 'Svetová federácia FIH zaviedla zmeny, ktoré sa dotknú aj našich súťaží. Prečítajte si zhrnutie kľúčových zmien v posudzovaní.', date: '10. Máj 2024', category: 'Súťaž', imageUrl: 'https://images.unsplash.com/photo-1459865264687-595d652de67e?q=80&w=800&auto=format&fit=crop' }, // Referee/Whistle
   { id: 'n5', title: 'Rozhovor s kapitánom reprezentácie', snippet: 'O cieľoch, motivácii a budúcnosti slovenského pozemného hokeja.', date: '05. Máj 2024', category: 'Rozhovor', imageUrl: 'https://images.unsplash.com/photo-1517649763962-0c623066013b?q=80&w=800&auto=format&fit=crop' }, // Athlete portrait
   { id: 'n6', title: 'Letný kemp mládeže v plnom prúde', snippet: 'Viac ako 50 detí sa zúčastnilo prvého turnusu letného kempu v Rači. Pozrite si fotogalériu.', date: '01. Máj 2024', category: 'Mládež', imageUrl: 'https://images.unsplash.com/photo-1461896836934-ffe607ba8211?q=80&w=800&auto=format&fit=crop' }, // Running on grass

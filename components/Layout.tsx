@@ -188,7 +188,7 @@ const Layout: React.FC<LayoutProps> = ({ children, currentView, onChangeView }) 
       </div>
 
       {/* 2. MAIN NAVIGATION (Redesigned) */}
-      <nav className="sticky top-0 z-40 bg-white shadow-sm border-b border-gray-100 h-[80px] md:h-[90px] flex items-center transition-all">
+      <nav className="sticky top-0 z-40 bg-white shadow-sm border-b border-gray-100 h-[100px] md:h-[140px] flex items-center transition-all">
         <div className="container mx-auto px-4 md:px-8 flex items-center justify-between">
           
           {/* Logo */}
@@ -196,45 +196,38 @@ const Layout: React.FC<LayoutProps> = ({ children, currentView, onChangeView }) 
             className="flex items-center gap-3 cursor-pointer shrink-0" 
             onClick={() => onChangeView('home')}
           >
-            <div className="w-10 h-10 md:w-14 md:h-14 relative flex items-center justify-center">
-               <svg viewBox="0 0 100 100" className="w-full h-full drop-shadow-sm">
-                  <path d="M20,20 L40,80 L80,20" fill="none" stroke="#0B2144" strokeWidth="8" strokeLinecap="round" />
-                  <path d="M40,50 L60,50" fill="none" stroke="#EF1C26" strokeWidth="8" strokeLinecap="round" />
-                  <circle cx="60" cy="20" r="8" fill="#EF1C26" />
-               </svg>
-            </div>
-            <div className="hidden md:flex flex-col -space-y-1">
-              <span className="text-2xl font-black tracking-tighter text-slovak-blue">
-                SZPH
-              </span>
-              <span className="text-[10px] uppercase font-bold text-gray-400 tracking-[0.2em]">
-                Slovak Hockey
-              </span>
+            <div className="w-32 h-20 md:w-64 md:h-32 relative flex items-center justify-center">
+               <img 
+                 src="https://szph.sk/wp-content/uploads/2025/11/logo-field-hockey.png" 
+                 alt="SZPH Logo" 
+                 className="w-full h-full object-contain"
+               />
             </div>
           </div>
 
           {/* Desktop Links (Centered) */}
-          <div className="hidden xl:flex items-center gap-8">
+          <div className="hidden xl:flex items-center gap-8 h-full">
             {MAIN_NAV_ITEMS.map((item) => (
               <div 
                 key={item.id}
-                className="relative group h-[90px] flex items-center"
+                className="relative group h-full flex items-center"
                 onMouseEnter={() => setHoveredNav(item.id)}
                 onMouseLeave={() => setHoveredNav(null)}
               >
                 <button
                   onClick={() => !item.children && onChangeView(item.id)}
-                  className={`text-sm font-black uppercase tracking-wide transition-colors relative py-2
+                  className={`text-sm font-bold uppercase tracking-wide transition-colors relative py-2 flex items-center gap-1
                     ${currentView === item.id ? 'text-slovak-blue' : 'text-gray-600 hover:text-slovak-blue'}
                   `}
                 >
                   {item.label}
+                  {item.children && <ChevronDown size={14} strokeWidth={3} className="mt-[-2px]" />}
                   <span className={`absolute bottom-0 left-0 w-full h-[3px] bg-slovak-red transform origin-left transition-transform duration-300 ${currentView === item.id ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'}`}></span>
                 </button>
                 
                 {/* Mega Menu / Dropdown */}
                 {item.children && hoveredNav === item.id && (
-                  <div className="absolute top-[80px] left-1/2 transform -translate-x-1/2 w-64 bg-white rounded-xl shadow-[0_10px_40px_-10px_rgba(0,0,0,0.1)] border border-gray-100 p-2 animate-in fade-in slide-in-from-top-4 duration-200 z-50">
+                  <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-64 bg-white rounded-xl shadow-[0_10px_40px_-10px_rgba(0,0,0,0.1)] border border-gray-100 p-2 animate-in fade-in slide-in-from-top-4 duration-200 z-50">
                      <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-4 h-4 bg-white transform rotate-45 border-t border-l border-gray-100"></div>
                      <div className="relative bg-white rounded-lg overflow-hidden">
                         {item.children.map(subItem => (
@@ -341,7 +334,7 @@ const Layout: React.FC<LayoutProps> = ({ children, currentView, onChangeView }) 
              <div className="flex items-center">
                  <div className="hidden md:flex items-center gap-2 pr-6 py-4 border-r border-gray-200 mr-2 shrink-0">
                     <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                    <span className="text-xs font-black text-gray-900 uppercase tracking-widest">Match Center</span>
+                    <span className="text-xs font-black text-gray-900 uppercase tracking-widest">Zóna zápasov</span>
                  </div>
                  
                  <div className="overflow-x-auto hide-scrollbar flex gap-3 py-3 px-4 md:px-0 w-full">
