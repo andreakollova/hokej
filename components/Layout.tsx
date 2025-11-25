@@ -356,7 +356,7 @@ const Layout: React.FC<LayoutProps> = ({ children, currentView, onChangeView }) 
       </main>
 
       {/* Footer - Redesigned */}
-      <footer className="bg-[#0B2144] border-t border-white/10 mt-20 text-white rounded-t-[30px] relative z-40 overflow-hidden">
+      <footer className="bg-[#0B2144] border-t border-white/10 mt-20 text-white rounded-t-xl relative z-40 overflow-hidden">
         <div className="container mx-auto px-6 py-16">
            <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
               
@@ -399,15 +399,15 @@ const Layout: React.FC<LayoutProps> = ({ children, currentView, onChangeView }) 
               {/* Column 3: Funding Logos */}
               <div className="col-span-1 flex flex-col items-start md:items-start">
                 <h4 className="font-black text-white mb-8 uppercase text-sm tracking-widest border-b border-white/10 pb-4 inline-block">Príspevok uznanému športu</h4>
-                <div className="flex flex-col gap-8 w-full">
-                    <div className="bg-white rounded-2xl p-4 w-full max-w-[280px] flex items-center justify-center">
+                <div className="flex flex-col gap-6 w-full">
+                    <div className="bg-white rounded-2xl p-6 w-full max-w-[340px] flex items-center justify-center">
                        <img src="https://szph.sk/wp-content/uploads/2025/03/rozpocet-2025-logo.jpg" className="w-full h-auto object-contain" alt="Rozpočet 2025" />
                     </div>
-                    <div className="bg-white rounded-xl p-3 w-full max-w-[280px] flex items-center justify-center">
-                        <img src="https://szph.sk/wp-content/uploads/2024/08/Screenshot-2024-05-24-133021-470x189-1.png" className="h-16 w-full object-contain" alt="Ministerstvo" />
+                    <div className="bg-white rounded-xl p-4 w-full max-w-[340px] flex items-center justify-center">
+                        <img src="https://szph.sk/wp-content/uploads/2024/08/Screenshot-2024-05-24-133021-470x189-1.png" className="h-24 w-full object-contain" alt="Ministerstvo" />
                     </div>
-                    <div className="bg-white rounded-xl p-3 w-full max-w-[280px] flex items-center justify-center">
-                         <img src="https://szph.sk/wp-content/uploads/2024/08/federacia.png" className="h-16 w-full object-contain" alt="Federácia" />
+                    <div className="bg-white rounded-xl p-4 w-full max-w-[340px] flex items-center justify-center">
+                         <img src="https://szph.sk/wp-content/uploads/2024/08/federacia.png" className="h-24 w-full object-contain" alt="Federácia" />
                     </div>
                 </div>
               </div>

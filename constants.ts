@@ -1,3 +1,4 @@
+
 import { Match, MatchStatus, Player, NewsItem, Team, Partner, InstagramPost, VideoItem } from './types';
 
 // National Team
@@ -231,7 +232,7 @@ export const NEWS: NewsItem[] = [
     snippet: 'Na Youth Leadership Festivale EuroHockey Institute v nemeckom Mönchengladbachu sa v auguste stretli desiatky mladých hokejových nadšencov z celej Európy. Počas niekoľkých dní absolvovali intenzívny program workshopov a diskusií, zameraných na rozvoj líderských zručností, inklúziu, marketing či duševné zdravie.', 
     date: 'Pred 2 hodinami', 
     category: 'Reprezentácia', 
-    imageUrl: 'https://szph.sk/wp-content/uploads/2025/11/MG_8015-1-773x380.jpg' 
+    imageUrl: 'https://szph.sk/wp-content/uploads/2025/11/MG_8015-1.jpg' 
   },
   { 
     id: 'n2', 
@@ -267,18 +268,17 @@ export const NEWS: NewsItem[] = [
 ];
 
 export const PARTNERS: Partner[] = [
-  { id: 'p1', name: 'Slovenský Olympijský Tím', logo: 'https://ui-avatars.com/api/?name=SOV&background=fff&color=000&length=3&size=128' },
-  { id: 'p2', name: 'Ministerstvo Školstva', logo: 'https://ui-avatars.com/api/?name=MIN&background=fff&color=000&length=3&size=128' },
-  { id: 'p3', name: 'Generálny Partner', logo: 'https://ui-avatars.com/api/?name=GP&background=fff&color=000&length=2&size=128' },
-  { id: 'p4', name: 'Partner Ligy', logo: 'https://ui-avatars.com/api/?name=LIGA&background=fff&color=000&length=4&size=128' },
-  { id: 'p5', name: 'Mediálny Partner', logo: 'https://ui-avatars.com/api/?name=MEDIA&background=fff&color=000&length=5&size=128' },
+  { id: 'p1', name: 'Partner 1', logo: 'https://szph.sk/wp-content/uploads/2024/09/logo-2.jpg' },
+  { id: 'p2', name: 'Partner 2', logo: 'https://szph.sk/wp-content/uploads/2024/09/logo-5aa.jpg' },
+  { id: 'p3', name: 'Partner 3', logo: 'https://szph.sk/wp-content/uploads/2024/09/logo-3.jpg' },
+  { id: 'p4', name: 'Partner 4', logo: 'https://szph.sk/wp-content/uploads/2024/09/logo-5.jpg' },
 ];
 
 export const INSTAGRAM_POSTS: InstagramPost[] = [
-  { id: 'i1', imageUrl: 'https://images.unsplash.com/photo-1565158226065-27a44c921769?q=80&w=400&h=400&fit=crop', caption: 'Skvelý víkend v Rači! 🏑🔥 #hockeyfamily', likes: 245 },
-  { id: 'i2', imageUrl: 'https://images.unsplash.com/photo-1526676037777-05a232554f77?q=80&w=400&h=400&fit=crop', caption: 'Reprezentácia v plnom nasadení. 🇸🇰', likes: 512 },
-  { id: 'i3', imageUrl: 'https://images.unsplash.com/photo-1589487391730-58f20eb2c308?q=80&w=400&h=400&fit=crop', caption: 'Nezabudnite na registráciu do ligy! 📝', likes: 120 },
-  { id: 'i4', imageUrl: 'https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?q=80&w=400&h=400&fit=crop', caption: 'Ďakujeme fanúšikom za podporu. 🙌', likes: 330 },
+  { id: 'i1', imageUrl: 'https://images.unsplash.com/photo-1515264359400-0e1cb3014a5c?q=80&w=500&auto=format&fit=crop', caption: 'Príprava na kvalifikáciu! 🇸🇰', likes: 245 },
+  { id: 'i2', imageUrl: 'https://images.unsplash.com/photo-1461896836934-ffe607ba8211?q=80&w=500&auto=format&fit=crop', caption: 'Momentky zo zápasu. 📸 #hockey', likes: 512 },
+  { id: 'i3', imageUrl: 'https://images.unsplash.com/photo-1628891435252-c6507a216893?q=80&w=500&auto=format&fit=crop', caption: 'Ďakujeme za podporu! 🙌', likes: 120 },
+  { id: 'i4', imageUrl: 'https://images.unsplash.com/photo-1532009873095-2cc56e7e8838?q=80&w=500&auto=format&fit=crop', caption: 'Bežíme ďalej! 🏃‍♂️', likes: 330 },
 ];
 
 // YouTube Shorts - replaced standard videos

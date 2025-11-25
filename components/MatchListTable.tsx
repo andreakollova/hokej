@@ -1,6 +1,7 @@
+
 import React, { useState } from 'react';
 import { Match, MatchStatus } from '../types';
-import { ArrowRight, MapPin, CalendarDays, ChevronLeft, ChevronRight, Tv } from 'lucide-react';
+import { ArrowRight, MapPin, CalendarDays, ChevronLeft, ChevronRight, Video, Trophy } from 'lucide-react';
 
 interface MatchListTableProps {
   matches: Match[];
@@ -8,7 +9,7 @@ interface MatchListTableProps {
 
 export const MatchListTable: React.FC<MatchListTableProps> = ({ matches }) => {
   const [page, setPage] = useState(1);
-  const [activeTab, setActiveTab] = useState<'VŠETKY' | 'LIGA' | 'REPREZENTÁCIA'>('VŠETKY');
+  const [activeTab, setActiveTab] = useState<'VŠETKY' | 'REPREZENTÁCIA' | 'LIGA'>('VŠETKY');
   const itemsPerPage = 5;
   
   const formatDate = (dateStr: string) => {
@@ -39,7 +40,7 @@ export const MatchListTable: React.FC<MatchListTableProps> = ({ matches }) => {
   }, {} as Record<string, Match[]>);
 
   // Reset page when tab changes
-  const handleTabChange = (tab: 'VŠETKY' | 'LIGA' | 'REPREZENTÁCIA') => {
+  const handleTabChange = (tab: 'VŠETKY' | 'REPREZENTÁCIA' | 'LIGA') => {
     setActiveTab(tab);
     setPage(1);
   };
@@ -50,21 +51,23 @@ export const MatchListTable: React.FC<MatchListTableProps> = ({ matches }) => {
       <div className="px-8 py-10 md:px-12 md:py-12 border-b border-gray-100 flex flex-col xl:flex-row justify-between items-start xl:items-end bg-white gap-6">
         <div>
            <span className="text-slovak-red font-bold text-xs uppercase tracking-widest mb-2 block">SLOVENSKÁ LIGA A REPREZENTÁCIA</span>
-           <h3 className="text-4xl md:text-5xl font-black tracking-tighter text-slovak-blue mb-6">Najbližšie zápasy</h3>
+           <h3 className="text-4xl md:text-5xl font-black tracking-tighter text-slovak-blue mb-6 uppercase">NAJBLIŽŠIE ZÁPASY</h3>
            
            {/* Tabs */}
            <div className="flex flex-wrap gap-2">
-             {(['VŠETKY', 'LIGA', 'REPREZENTÁCIA'] as const).map((tab) => (
+             {(['VŠETKY', 'REPREZENTÁCIA', 'LIGA'] as const).map((tab) => (
                <button
                  key={tab}
                  onClick={() => handleTabChange(tab)}
-                 className={`px-6 py-2.5 rounded-full text-sm font-bold transition-all duration-300 border uppercase tracking-wide ${
+                 className={`px-6 py-2.5 rounded-full text-sm font-bold transition-all duration-300 border uppercase tracking-wide flex items-center gap-2 ${
                    activeTab === tab 
                      ? 'bg-slovak-blue text-white border-slovak-blue shadow-lg shadow-blue-900/20' 
                      : 'bg-white text-gray-500 border-gray-200 hover:border-gray-300 hover:bg-gray-50'
                  }`}
                >
-                 {tab === 'VŠETKY' ? 'Všetky' : tab === 'LIGA' ? 'Liga' : 'Reprezentácia'}
+                 {tab === 'REPREZENTÁCIA' && <img src="https://flagcdn.com/w20/sk.png" alt="SK" className="w-5 h-auto" />}
+                 {tab === 'LIGA' && <Trophy size={14} />}
+                 {tab === 'VŠETKY' ? 'VŠETKY' : tab === 'LIGA' ? 'LIGA' : 'REPREZENTÁCIA'}
                </button>
              ))}
            </div>
@@ -99,7 +102,10 @@ export const MatchListTable: React.FC<MatchListTableProps> = ({ matches }) => {
                   <tr key={match.id} className="group hover:bg-gray-50 transition-colors h-20">
                     {/* DÁTUM */}
                     <td className="py-4 pl-8 md:pl-12 whitespace-nowrap font-medium text-gray-900">
-                      {formatDate(match.date)}
+                      <div className="flex items-center gap-2">
+                         <span>{formatDate(match.date)}</span>
+                         {hasStream && <Video size={16} className="text-slovak-red animate-pulse" fill="currentColor" />}
+                      </div>
                     </td>
                     
                     {/* DOMÁCI */}
@@ -140,11 +146,6 @@ export const MatchListTable: React.FC<MatchListTableProps> = ({ matches }) => {
                           <span className="text-xs font-bold text-gray-500 uppercase tracking-wide bg-gray-100 px-2 py-1 rounded">
                             {match.competition}
                           </span>
-                          {hasStream && (
-                             <span className="flex items-center gap-1 text-[9px] font-black text-white bg-slovak-red px-2 py-0.5 rounded uppercase tracking-wide shadow-sm animate-pulse">
-                               <Tv size={10} /> Live Stream
-                             </span>
-                          )}
                       </div>
                     </td>
                     

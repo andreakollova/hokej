@@ -1,9 +1,10 @@
+
 import React, { useState, useRef } from 'react';
 import { NEWS } from '../constants';
-import { ArrowRight, Clock, TrendingUp, Share2, ShoppingBag, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ArrowRight, Clock, TrendingUp, Share2, ShoppingBag, ChevronLeft, ChevronRight, Trophy } from 'lucide-react';
 
 export const NewsSection: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<'Všetky' | 'Reprezentácia' | 'Liga'>('Všetky');
+  const [activeTab, setActiveTab] = useState<'VŠETKY' | 'REPREZENTÁCIA' | 'LIGA'>('VŠETKY');
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   // Scroll Handler for Trending Strip
@@ -21,9 +22,9 @@ export const NewsSection: React.FC = () => {
 
   // Filter Logic
   const filteredNews = NEWS.filter((item) => {
-    if (activeTab === 'Všetky') return true;
-    if (activeTab === 'Reprezentácia') return item.category === 'Reprezentácia';
-    if (activeTab === 'Liga') return ['Súťaž', 'Kluby', 'Pohár', 'Halový hokej'].includes(item.category);
+    if (activeTab === 'VŠETKY') return true;
+    if (activeTab === 'REPREZENTÁCIA') return item.category === 'Reprezentácia';
+    if (activeTab === 'LIGA') return ['Súťaž', 'Kluby', 'Pohár', 'Halový hokej'].includes(item.category);
     return true;
   });
 
@@ -32,25 +33,27 @@ export const NewsSection: React.FC = () => {
   const recentNews = filteredNews.slice(6, 12);
 
   return (
-    <div className="container mx-auto px-4 md:px-8 py-6 md:py-10">
+    <div className="container mx-auto px-4 md:px-8 py-8 md:py-12">
       {/* Header with Toggles */}
-      <div className="flex flex-col md:flex-row justify-between items-end mb-4 gap-6">
+      <div className="flex flex-col md:flex-row justify-between items-end mb-6 gap-6">
          <div className="-mt-5">
             <span className="text-slovak-red font-bold text-xs uppercase tracking-widest mb-2 block">ZO SVETA POZEMNÉHO HOKEJA</span>
-            <h2 className="text-4xl md:text-5xl font-black tracking-tighter text-slovak-blue mb-4">Aktuality</h2>
+            <h2 className="text-4xl md:text-5xl font-black tracking-tighter text-slovak-blue mb-4 uppercase">AKTUALITY</h2>
             
             {/* Toggles */}
             <div className="flex flex-wrap gap-2">
-               {(['Všetky', 'Reprezentácia', 'Liga'] as const).map((tab) => (
+               {(['VŠETKY', 'REPREZENTÁCIA', 'LIGA'] as const).map((tab) => (
                  <button
                    key={tab}
                    onClick={() => setActiveTab(tab)}
-                   className={`px-6 py-2.5 rounded-full text-sm font-bold transition-all duration-300 border ${
+                   className={`px-6 py-2.5 rounded-full text-sm font-bold transition-all duration-300 border flex items-center gap-2 uppercase ${
                      activeTab === tab 
                        ? 'bg-slovak-blue text-white border-slovak-blue shadow-lg shadow-blue-900/20' 
                        : 'bg-white text-gray-500 border-gray-200 hover:border-gray-300 hover:bg-gray-50'
                    }`}
                  >
+                   {tab === 'REPREZENTÁCIA' && <img src="https://flagcdn.com/w20/sk.png" alt="SK" className="w-5 h-auto" />}
+                   {tab === 'LIGA' && <Trophy size={14} />}
                    {tab}
                  </button>
                ))}
@@ -77,9 +80,9 @@ export const NewsSection: React.FC = () => {
                     alt={featuredNews.title}
                     className="w-full h-full object-cover transition-transform duration-[1.5s] group-hover:scale-105"
                   />
-                  {/* Dynamic Blue Gradient Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-slovak-blue/95 via-slovak-blue/50 to-transparent mix-blend-multiply opacity-90"></div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-slovak-blue via-transparent to-transparent opacity-60"></div>
+                  {/* Dynamic Blue Gradient Overlay - 2x Stronger */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-slovak-blue via-slovak-blue/90 to-transparent mix-blend-multiply opacity-100"></div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-slovak-blue via-transparent to-transparent opacity-80"></div>
                   
                   <div className="absolute bottom-0 left-0 p-8 md:p-14 text-white w-full z-10">
                     <div className="flex items-center gap-3 mb-6 animate-in fade-in slide-in-from-bottom-4 duration-700">
@@ -99,8 +102,9 @@ export const NewsSection: React.FC = () => {
                       {featuredNews.snippet}
                     </p>
 
-                    <div className="mt-8 flex items-center gap-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500 transform translate-y-4 group-hover:translate-y-0">
-                        <span className="text-sm font-bold uppercase tracking-widest flex items-center gap-2">
+                    {/* Always visible button */}
+                    <div className="mt-8 flex items-center gap-4">
+                        <span className="text-sm font-bold uppercase tracking-widest flex items-center gap-2 text-white">
                           Čítať viac <ArrowRight size={16} />
                         </span>
                     </div>
@@ -122,27 +126,29 @@ export const NewsSection: React.FC = () => {
                       </div>
                       
                       <div className="flex flex-col gap-4 relative flex-1">
-                        {/* Timeline Line */}
-                        <div className="absolute left-[11px] top-2 bottom-2 w-[2px] bg-gray-100"></div>
+                        {/* Timeline Line - Dark Blue */}
+                        <div className="absolute left-[11px] top-2 bottom-2 w-[2px] bg-slovak-blue opacity-20"></div>
 
                         {recentNews.map((item) => (
                           <div 
                             key={item.id} 
                             className="flex gap-4 group cursor-pointer relative z-10 hover:bg-gray-50 p-2 rounded-lg transition-colors -mx-2"
                           >
-                              <div className="w-6 h-6 shrink-0 rounded-full border-4 border-white bg-slovak-blue/20 mt-0.5 shadow-sm group-hover:bg-gray-600 transition-colors"></div>
+                              {/* Dot - Dark Blue */}
+                              <div className="w-6 h-6 shrink-0 rounded-full border-4 border-white bg-slovak-blue mt-0.5 shadow-sm group-hover:scale-110 transition-transform"></div>
                               
                               <div className="flex-1">
                                 <div className="flex items-center gap-2 mb-1">
-                                    <span className="text-[10px] font-black text-gray-600 uppercase bg-gray-100 px-2 py-0.5 rounded">{item.category}</span>
+                                    {/* Tag - Red */}
+                                    <span className="text-[10px] font-black text-white uppercase bg-slovak-red px-2 py-0.5 rounded">{item.category}</span>
                                     <span className="text-[10px] text-gray-400 font-medium">{item.date}</span>
                                 </div>
-                                <h4 className="font-bold text-xs text-gray-800 leading-snug line-clamp-2 group-hover:text-slovak-blue transition-colors">
+                                <h4 className="font-bold text-sm text-gray-800 leading-snug line-clamp-2 group-hover:text-slovak-blue transition-colors">
                                   {item.title}
                                 </h4>
                               </div>
                               
-                              <div className="w-14 h-14 shrink-0 rounded-lg overflow-hidden shadow-sm">
+                              <div className="w-24 h-16 shrink-0 rounded-lg overflow-hidden shadow-sm">
                                 <img src={item.imageUrl} className="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all duration-500" />
                               </div>
                           </div>
@@ -150,7 +156,7 @@ export const NewsSection: React.FC = () => {
                       </div>
                   </div>
                   
-                  <button className="w-full mt-6 py-3 rounded-lg bg-gray-50 text-gray-600 text-xs font-black uppercase tracking-widest hover:bg-slovak-blue hover:text-white transition-all border border-gray-100 shadow-sm hover:shadow-lg mt-auto">
+                  <button className="w-full mt-12 py-3 rounded-lg bg-gray-50 text-gray-600 text-xs font-black uppercase tracking-widest hover:bg-slovak-blue hover:text-white transition-all border border-gray-100 shadow-sm hover:shadow-lg mt-auto">
                     Zobraziť viac článkov
                   </button>
               </div>
@@ -192,14 +198,14 @@ export const NewsSection: React.FC = () => {
                   {trendingNews.map((item, index) => (
                     <div 
                       key={item.id} 
-                      className="snap-center shrink-0 w-[260px] md:w-[300px] h-[360px] relative rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer group hover:-translate-y-2"
+                      className="snap-center shrink-0 w-[260px] md:w-[300px] h-[360px] relative rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer group"
                       style={{ transitionDelay: `${index * 50}ms` }}
                     >
                         <img src={item.imageUrl} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
                         
-                        {/* Blue Gradient Overlay */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-slovak-blue/95 via-slovak-blue/50 to-transparent mix-blend-multiply opacity-90"></div>
-                        <div className="absolute inset-0 bg-gradient-to-t from-slovak-blue via-transparent to-transparent opacity-60"></div>
+                        {/* Blue Gradient Overlay - 2x Stronger */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-slovak-blue via-slovak-blue/90 to-transparent mix-blend-multiply opacity-100"></div>
+                        <div className="absolute inset-0 bg-gradient-to-t from-slovak-blue via-transparent to-transparent opacity-80"></div>
                         
                         <div className="absolute top-4 left-4">
                           <span className="bg-white/20 backdrop-blur-md border border-white/20 text-white text-[10px] font-black uppercase px-3 py-1.5 rounded-lg">
@@ -211,7 +217,7 @@ export const NewsSection: React.FC = () => {
                           <div className="text-[10px] text-gray-300 font-bold mb-2 flex items-center gap-1 opacity-80">
                             <Clock size={10} /> {item.date}
                           </div>
-                          <h4 className="font-bold text-white text-lg leading-tight line-clamp-3 group-hover:text-blue-200 transition-colors">
+                          <h4 className="font-bold text-white text-lg leading-tight line-clamp-3 transition-colors">
                             {item.title}
                           </h4>
                         </div>
@@ -263,7 +269,7 @@ export const NewsSection: React.FC = () => {
       ) : (
         <div className="bg-white rounded-xl p-12 text-center border border-gray-100 shadow-sm">
           <p className="text-gray-500 font-medium text-lg">Pre túto kategóriu sa nenašli žiadne články.</p>
-          <button onClick={() => setActiveTab('Všetky')} className="mt-4 text-slovak-red font-bold hover:underline">Zobraziť všetky správy</button>
+          <button onClick={() => setActiveTab('VŠETKY')} className="mt-4 text-slovak-red font-bold hover:underline">Zobraziť všetky správy</button>
         </div>
       )}
     </div>

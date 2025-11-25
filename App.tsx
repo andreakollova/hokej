@@ -10,9 +10,10 @@ import { NewsSection } from './components/NewsSection';
 import { GetInvolved } from './components/GetInvolved';
 import { SocialMedia } from './components/SocialMedia';
 import { Partners } from './components/Partners';
+import { ProjectsCarousel } from './components/ProjectsCarousel';
 import { MATCHES, TEAM_SVK } from './constants';
 import { MatchCard } from './components/MatchCard';
-import { MapPin, Calendar, Trophy, ChevronRight, PlayCircle } from 'lucide-react';
+import { MapPin, Calendar, Trophy, ChevronRight, PlayCircle, Star } from 'lucide-react';
 
 const App: React.FC = () => {
   const [currentView, setCurrentView] = useState('home');
@@ -55,13 +56,14 @@ const App: React.FC = () => {
         
         {/* Overlapping Section: Last Result & Next Match Widget (NATIONAL TEAM ONLY) */}
         <div className="container mx-auto px-4 md:px-8 relative z-20 -mt-7 mb-8">
-           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+           {/* Custom Grid: Match cards wider (approx 40% each), Player card narrower (approx 20%) */}
+           <div className="grid grid-cols-1 lg:grid-cols-[2fr_2fr_1.2fr] gap-6">
               
-              {/* Last National Result Card */}
+              {/* 1. Last National Result Card */}
               {lastNationalResult && (
                 <div 
                   onClick={() => setCurrentView('matches')}
-                  className="bg-white rounded-3xl p-6 shadow-xl border-t-4 border-slovak-blue flex flex-col justify-between h-full group cursor-pointer hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 relative overflow-hidden"
+                  className="bg-white rounded-3xl p-6 shadow-xl border-t-4 border-slovak-blue flex flex-col justify-between h-full group cursor-pointer hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 relative overflow-hidden min-h-[220px]"
                 >
                    {/* Header */}
                    <div className="flex justify-between items-start mb-1 border-b border-gray-100 pb-2">
@@ -119,10 +121,10 @@ const App: React.FC = () => {
                 </div>
               )}
 
-              {/* Next National Match Teaser */}
+              {/* 2. Next National Match Teaser */}
               <div 
                 onClick={() => setCurrentView('matches')}
-                className="bg-slovak-red rounded-3xl p-6 shadow-xl text-white relative overflow-hidden flex flex-col justify-center min-h-[220px] group cursor-pointer hover:shadow-2xl hover:-translate-y-1 transition-all duration-300"
+                className="bg-slovak-red rounded-3xl p-6 shadow-xl text-white relative overflow-hidden flex flex-col justify-between min-h-[220px] group cursor-pointer hover:shadow-2xl hover:-translate-y-1 transition-all duration-300"
               >
                  <div className="absolute right-0 top-0 w-48 h-48 bg-white opacity-5 rounded-full translate-x-1/4 -translate-y-1/4 blur-3xl"></div>
                  <div className="absolute left-0 bottom-0 w-32 h-32 bg-black opacity-10 rounded-full -translate-x-1/4 translate-y-1/4 blur-2xl"></div>
@@ -197,6 +199,50 @@ const App: React.FC = () => {
                  )}
               </div>
 
+              {/* 3. Player of the Week Card */}
+              <div 
+                onClick={() => setCurrentView('reprezentacia')}
+                className="bg-transparent rounded-3xl p-0 shadow-xl flex flex-col justify-between h-full group cursor-pointer hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 relative overflow-visible min-h-[220px]"
+              >
+                  {/* Background (Clipped) */}
+                  <div className="absolute inset-0 bg-gradient-to-b from-gray-50 via-white to-white z-0 rounded-3xl overflow-hidden border-t-4 border-white"></div>
+
+                  {/* Header */}
+                  <div className="relative z-10 px-6 pt-6 pb-0">
+                     <div className="flex justify-between items-start mb-1">
+                         <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest block mt-[3px]">
+                            Hráč Týždňa
+                         </span>
+                         <img src="https://flagcdn.com/w40/sk.png" alt="Slovakia" className="w-6 rounded-[2px] shadow-sm" />
+                     </div>
+                     <div className="flex flex-col items-start gap-1">
+                        <span className="bg-gray-100 text-gray-600 text-[10px] font-bold px-2 py-0.5 rounded uppercase">
+                           ŽENY
+                        </span>
+                     </div>
+                  </div>
+
+                  {/* Body with Image - OVERFLOWING (Adjusted Scale) */}
+                  <div className="relative z-20 flex-1 flex flex-col items-center justify-end mt-0 pointer-events-none">
+                      <div className="absolute bottom-14 w-[115%] h-[120%] flex items-end justify-center">
+                          <img 
+                            src="https://szph.sk/wp-content/uploads/2025/11/32324.png" 
+                            className="w-full h-full object-contain object-bottom transform group-hover:scale-105 transition-transform duration-500 drop-shadow-xl"
+                            alt="Šarlota Medvíková"
+                          />
+                      </div>
+                      
+                      {/* Name Plate */}
+                      <div className="w-full bg-[#0B2144] p-4 pt-6 text-white text-center relative z-20 rounded-b-3xl mt-auto pointer-events-auto">
+                         {/* Number Badge */}
+                         <div className="absolute -top-6 left-1/2 transform -translate-x-1/2 w-10 h-10 bg-slovak-red rounded-full flex items-center justify-center font-black text-white border-4 border-white shadow-sm z-20">
+                            7
+                         </div>
+                         <h3 className="font-black text-lg uppercase leading-none mt-1">Šarlota<br/>Medvíková</h3>
+                      </div>
+                  </div>
+              </div>
+
            </div>
         </div>
 
@@ -214,11 +260,14 @@ const App: React.FC = () => {
         <div className="container mx-auto px-4 md:px-8 mb-20 -mt-2">
            <MatchListTable matches={upcomingMatchesTable} />
         </div>
+
+        {/* 4. Projects Carousel (New Section) */}
+        <ProjectsCarousel />
         
-        {/* 4. Partners (Moved UP) */}
+        {/* 5. Partners (Moved UP) */}
         <Partners />
 
-        {/* 5. Social Media (Moved DOWN - Includes Instagram) */}
+        {/* 6. Social Media (Moved DOWN - Includes Instagram) */}
         <SocialMedia />
 
       </div>
