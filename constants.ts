@@ -1,4 +1,5 @@
 
+
 import { Match, MatchStatus, Player, NewsItem, Team, Partner, InstagramPost, VideoItem } from './types';
 
 // National Team
@@ -275,16 +276,16 @@ export const PARTNERS: Partner[] = [
 ];
 
 export const INSTAGRAM_POSTS: InstagramPost[] = [
-  { id: 'i1', imageUrl: 'https://images.unsplash.com/photo-1515264359400-0e1cb3014a5c?q=80&w=500&auto=format&fit=crop', caption: 'Príprava na kvalifikáciu! 🇸🇰', likes: 245 },
-  { id: 'i2', imageUrl: 'https://images.unsplash.com/photo-1461896836934-ffe607ba8211?q=80&w=500&auto=format&fit=crop', caption: 'Momentky zo zápasu. 📸 #hockey', likes: 512 },
-  { id: 'i3', imageUrl: 'https://images.unsplash.com/photo-1628891435252-c6507a216893?q=80&w=500&auto=format&fit=crop', caption: 'Ďakujeme za podporu! 🙌', likes: 120 },
-  { id: 'i4', imageUrl: 'https://images.unsplash.com/photo-1532009873095-2cc56e7e8838?q=80&w=500&auto=format&fit=crop', caption: 'Bežíme ďalej! 🏃‍♂️', likes: 330 },
+  { id: 'i1', imageUrl: 'https://szph.sk/wp-content/uploads/2025/11/MG_8015-1.jpg', caption: 'Príprava na kvalifikáciu! 🇸🇰', likes: 245 },
+  { id: 'i2', imageUrl: 'https://szph.sk/wp-content/uploads/2025/08/IMG_7852-773x380.jpg', caption: 'Momentky zo zápasu. 📸 #hockey', likes: 512 },
+  { id: 'i3', imageUrl: 'https://szph.sk/wp-content/uploads/2025/08/bd48622a-89fc-4d51-b23f-a220747d75f0-scaled-e1756108529745-773x380.jpg', caption: 'Ďakujeme za podporu! 🙌', likes: 120 },
+  { id: 'i4', imageUrl: 'https://szph.sk/wp-content/uploads/2025/11/32324.png', caption: 'Bežíme ďalej! 🏃‍♂️', likes: 330 },
 ];
 
-// YouTube Shorts - replaced standard videos
+// YouTube Videos - Full IDs from user
 export const VIDEOS: VideoItem[] = [
-  { id: 'fat3tI2IWkY', title: 'Hockey Skills 1', duration: '', thumbnail: '' },
-  { id: 'EfrpwlCCLAc', title: 'Hockey Skills 2', duration: '', thumbnail: '' },
-  { id: 'x0wS94PLaQc', title: 'Hockey Skills 3', duration: '', thumbnail: '' },
-  { id: 'tznyHAGe5CE', title: 'Hockey Skills 4', duration: '', thumbnail: '' },
+  { id: 'W8Umeplx-8o', title: 'Video 1', duration: '', thumbnail: '' },
+  { id: 'QDL6rHpqd_c', title: 'Video 2', duration: '', thumbnail: '' },
+  { id: 'R2xOukt5BgE', title: 'Video 3', duration: '', thumbnail: '' },
+  { id: '9HxmftfEa0A', title: 'Video 4', duration: '', thumbnail: '' },
 ];

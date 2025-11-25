@@ -27,8 +27,8 @@ const PROJECTS = [
   {
     id: 4,
     title: 'Walking Hockey pre seniorov',
-    description: 'Pohybová aktivita prispôsobená pre seniorov. Hokej v kráčajúcom tempe pre zdravie a komunitu.',
-    image: 'https://d1ssu070pg2v9i.cloudfront.net/pex/scottish_hockey/2023/04/26093343/51860674361_49896f36a9_c.jpg',
+    description: 'Pohybová aktivita prispôsobená pre seniorov - pozemný hokej v kráčajúcom tempe.',
+    image: 'http://www.fih.ch/ImageGen.ashx?width=581&constrain=true&compression=50&image=http://www.fih.ch/files/pictures/news/Masters%20world%20cup%20credit%20Hockey%20World%20Cup.jpg',
     icon: <Activity size={20} />
   },
   {
@@ -128,7 +128,7 @@ export const ProjectsCarousel: React.FC = () => {
                className="min-w-[320px] md:min-w-[350px] snap-center group cursor-pointer relative"
              >
                 {/* Unified Card Container */}
-                <div className="bg-[#0f2a55] border border-white/5 rounded-3xl overflow-hidden hover:border-white/20 transition-all duration-300 shadow-xl hover:shadow-2xl hover:shadow-blue-900/20 h-full flex flex-col group-hover:-translate-y-2">
+                <div className="bg-[#0f2a55] border border-white/5 rounded-3xl overflow-hidden hover:border-white/20 transition-all duration-300 shadow-xl hover:shadow-2xl hover:shadow-blue-900/20 h-full flex flex-col">
                    
                    {/* Image Section (Top 55%) */}
                    <div className="h-[200px] relative overflow-hidden">

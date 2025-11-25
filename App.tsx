@@ -63,7 +63,7 @@ const App: React.FC = () => {
               {lastNationalResult && (
                 <div 
                   onClick={() => setCurrentView('matches')}
-                  className="bg-white rounded-3xl p-6 shadow-xl border-t-4 border-slovak-blue flex flex-col justify-between h-full group cursor-pointer hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 relative overflow-hidden min-h-[240px]"
+                  className="bg-white rounded-3xl p-6 shadow-xl border-t-4 border-slovak-blue flex flex-col justify-between h-full group cursor-pointer hover:shadow-2xl transition-all duration-300 relative overflow-hidden min-h-[240px]"
                 >
                    {/* Header - Explicit Context */}
                    <div className="flex justify-between items-start border-b border-gray-100 pb-3 mb-2">
@@ -71,14 +71,14 @@ const App: React.FC = () => {
                         <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest block mb-1">
                           Posledný Výsledok
                         </span>
-                        <h3 className="text-xl font-black text-slovak-blue uppercase tracking-tight flex items-center gap-2">
+                        <h3 className="text-[18px] font-black text-slovak-blue uppercase tracking-tight flex items-center gap-2">
                            Reprezentácia <span className="text-slovak-red">•</span> {lastNationalResult.category}
                         </h3>
                       </div>
                       <div className="text-right">
-                         <div className="flex items-center gap-1.5 justify-end bg-green-50 px-2 py-1 rounded-full border border-green-100 mb-1">
-                             <div className="w-1.5 h-1.5 bg-green-500 rounded-full"></div>
-                             <span className="text-[9px] font-bold text-green-700 uppercase tracking-wide">Vysielané naživo</span>
+                         <div className="flex items-center gap-1.5 justify-end bg-blue-50 px-2 py-1 rounded-full border border-blue-100 mb-1">
+                             <PlayCircle size={10} className="text-slovak-blue" />
+                             <span className="text-[9px] font-bold text-slovak-blue uppercase tracking-wide">Video záznam</span>
                          </div>
                          <span className="text-xs font-bold text-gray-400 block">{lastNationalResult.date}</span>
                       </div>
@@ -131,7 +131,7 @@ const App: React.FC = () => {
               {/* 2. Next National Match Teaser */}
               <div 
                 onClick={() => setCurrentView('matches')}
-                className="bg-slovak-red rounded-3xl p-6 shadow-xl text-white relative overflow-hidden flex flex-col min-h-[240px] group cursor-pointer hover:shadow-2xl hover:-translate-y-1 transition-all duration-300"
+                className="bg-slovak-red rounded-3xl p-6 shadow-xl text-white relative overflow-hidden flex flex-col min-h-[240px] group cursor-pointer hover:shadow-2xl transition-all duration-300"
               >
                  {/* Background Effects */}
                  <div className="absolute right-0 top-0 w-64 h-64 bg-white opacity-5 rounded-full translate-x-1/3 -translate-y-1/3 blur-3xl"></div>
@@ -146,7 +146,7 @@ const App: React.FC = () => {
                             <span className="text-[10px] font-bold text-red-100 uppercase tracking-widest block mb-1">
                                Najbližší Zápas
                             </span>
-                            <h3 className="text-xl font-black text-white uppercase tracking-tight flex items-center gap-2">
+                            <h3 className="text-[18px] font-black text-white uppercase tracking-tight flex items-center gap-2">
                                Reprezentácia <span className="opacity-50">•</span> {nextNationalMatch.category}
                             </h3>
                          </div>
@@ -204,7 +204,7 @@ const App: React.FC = () => {
                           <div className="pl-2 flex-1 overflow-hidden">
                              <span className="block text-[9px] font-bold text-red-200 uppercase">Miesto</span>
                              <div className="flex items-center gap-1.5 font-bold text-xs truncate">
-                                <MapPin size={12} className="shrink-0" /> {nextNationalMatch.venue.split(',')[0]}
+                                <MapPin size={12} className="shrink-0" /> {nextNationalMatch.venue}
                              </div>
                           </div>
                       </div>
