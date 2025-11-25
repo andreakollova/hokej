@@ -139,8 +139,8 @@ export const NewsSection: React.FC = () => {
                               
                               <div className="flex-1">
                                 <div className="flex items-center gap-2 mb-1">
-                                    {/* Tag - Red */}
-                                    <span className="text-[10px] font-black text-white uppercase bg-slovak-red px-2 py-0.5 rounded">{item.category}</span>
+                                    {/* Tag - Gray */}
+                                    <span className="text-[10px] font-black text-gray-600 uppercase bg-gray-100 px-2 py-0.5 rounded">{item.category}</span>
                                     <span className="text-[10px] text-gray-400 font-medium">{item.date}</span>
                                 </div>
                                 <h4 className="font-bold text-sm text-gray-800 leading-snug line-clamp-2 group-hover:text-slovak-blue transition-colors">

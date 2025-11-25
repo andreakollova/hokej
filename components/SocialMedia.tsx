@@ -74,8 +74,8 @@ export const SocialMedia: React.FC = () => {
 
            {/* New Handle Button */}
            <div className="mt-8">
-               <button className="flex items-center gap-2 text-slovak-red font-bold uppercase tracking-widest bg-white border border-slovak-red px-6 py-3 rounded-full hover:bg-slovak-red hover:text-white transition-all shadow-sm">
-                   <Instagram size={18} /> @fieldhockey_slovakia
+               <button className="text-white font-bold text-xs uppercase tracking-widest bg-slovak-blue px-5 py-2.5 rounded-full hover:bg-blue-900 transition-all shadow-sm">
+                   @fieldhockey_slovakia
                </button>
            </div>
         </div>

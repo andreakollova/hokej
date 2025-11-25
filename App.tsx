@@ -13,7 +13,7 @@ import { Partners } from './components/Partners';
 import { ProjectsCarousel } from './components/ProjectsCarousel';
 import { MATCHES, TEAM_SVK } from './constants';
 import { MatchCard } from './components/MatchCard';
-import { MapPin, Calendar, Trophy, ChevronRight, PlayCircle, Star } from 'lucide-react';
+import { MapPin, Calendar, Trophy, ChevronRight, PlayCircle, Star, Clock } from 'lucide-react';
 
 const App: React.FC = () => {
   const [currentView, setCurrentView] = useState('home');
@@ -63,59 +63,66 @@ const App: React.FC = () => {
               {lastNationalResult && (
                 <div 
                   onClick={() => setCurrentView('matches')}
-                  className="bg-white rounded-3xl p-6 shadow-xl border-t-4 border-slovak-blue flex flex-col justify-between h-full group cursor-pointer hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 relative overflow-hidden min-h-[220px]"
+                  className="bg-white rounded-3xl p-6 shadow-xl border-t-4 border-slovak-blue flex flex-col justify-between h-full group cursor-pointer hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 relative overflow-hidden min-h-[240px]"
                 >
-                   {/* Header */}
-                   <div className="flex justify-between items-start mb-1 border-b border-gray-100 pb-2">
+                   {/* Header - Explicit Context */}
+                   <div className="flex justify-between items-start border-b border-gray-100 pb-3 mb-2">
                       <div>
-                        <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest block mb-1">Posledný Výsledok</span>
-                        <div className="flex items-center gap-2">
-                           {/* Category Badges */}
-                           <span className="text-[10px] font-black bg-slovak-blue text-white px-2 py-0.5 rounded uppercase tracking-wide">
-                             Reprezentácia
-                           </span>
-                           <span className="text-[10px] font-bold bg-gray-100 text-gray-600 px-2 py-0.5 rounded uppercase">
-                             {lastNationalResult.category}
-                           </span>
-                        </div>
+                        <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest block mb-1">
+                          Posledný Výsledok
+                        </span>
+                        <h3 className="text-xl font-black text-slovak-blue uppercase tracking-tight flex items-center gap-2">
+                           Reprezentácia <span className="text-slovak-red">•</span> {lastNationalResult.category}
+                        </h3>
                       </div>
                       <div className="text-right">
-                        <span className="text-xs font-bold text-gray-400 block">{lastNationalResult.date}</span>
-                        {/* Live Replay/Broadcast Indicator */}
-                        <div className="flex items-center justify-end gap-1 mt-1">
+                         <div className="flex items-center gap-1.5 justify-end bg-green-50 px-2 py-1 rounded-full border border-green-100 mb-1">
                              <div className="w-1.5 h-1.5 bg-green-500 rounded-full"></div>
-                             <span className="text-[9px] font-bold text-gray-500 uppercase tracking-wide">Vysielané naživo</span>
-                        </div>
+                             <span className="text-[9px] font-bold text-green-700 uppercase tracking-wide">Vysielané naživo</span>
+                         </div>
+                         <span className="text-xs font-bold text-gray-400 block">{lastNationalResult.date}</span>
                       </div>
                    </div>
                    
-                   {/* Competition Name (Small below header) */}
-                   <div className="text-[10px] font-bold text-gray-400 flex items-center gap-1 mb-2">
-                      <Trophy size={10} /> {lastNationalResult.competition}
+                   {/* Competition Context */}
+                   <div className="text-xs font-bold text-gray-400 uppercase tracking-wide mb-4 flex items-center gap-1.5">
+                      <Trophy size={12} className="text-slovak-red" /> 
+                      {lastNationalResult.competition}
                    </div>
 
-                   {/* Content */}
-                   <div className="flex justify-between items-center px-2 py-2">
-                      <div className="text-center w-1/3">
-                         <img src={lastNationalResult.homeTeam.logo} className="w-16 h-16 object-contain mx-auto mb-2" />
-                         <span className="font-bold block text-sm leading-tight">{lastNationalResult.homeTeam.name}</span>
-                      </div>
-                      <div className="text-center w-1/3">
-                         <div className="text-4xl font-black text-slovak-blue bg-blue-50 px-4 py-2 rounded-xl mb-1 shadow-sm border border-blue-100">
-                            {lastNationalResult.scoreHome} : {lastNationalResult.scoreAway}
+                   {/* Scoreboard Content */}
+                   <div className="flex justify-between items-center px-2 mb-2">
+                      {/* Home */}
+                      <div className="text-center flex-1 flex flex-col items-center">
+                         <div className="h-16 h-16 flex items-center justify-center mb-2">
+                            <img src={lastNationalResult.homeTeam.logo} className="h-14 w-auto object-contain" />
                          </div>
-                         <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Koniec</span>
+                         <span className="font-bold text-sm leading-tight text-gray-900">{lastNationalResult.homeTeam.name}</span>
                       </div>
-                      <div className="text-center w-1/3">
-                         <img src={lastNationalResult.awayTeam.logo} className="w-16 h-16 object-contain mx-auto mb-2" />
-                         <span className="font-bold block text-sm leading-tight">{lastNationalResult.awayTeam.name}</span>
+
+                      {/* Score */}
+                      <div className="text-center px-4">
+                         <div className="text-5xl font-black text-slovak-blue tracking-tighter mb-1">
+                            {lastNationalResult.scoreHome}:{lastNationalResult.scoreAway}
+                         </div>
+                         <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest bg-gray-100 px-2 py-0.5 rounded">
+                            Koniec
+                         </span>
+                      </div>
+
+                      {/* Away */}
+                      <div className="text-center flex-1 flex flex-col items-center">
+                         <div className="h-16 h-16 flex items-center justify-center mb-2">
+                             <img src={lastNationalResult.awayTeam.logo} className="h-14 w-auto object-contain" />
+                         </div>
+                         <span className="font-bold text-sm leading-tight text-gray-900">{lastNationalResult.awayTeam.name}</span>
                       </div>
                    </div>
 
                    {/* Action Footer */}
-                   <div className="mt-4 flex justify-end">
-                      <button className="text-[9px] font-bold uppercase text-slovak-blue tracking-widest flex items-center gap-1 bg-blue-50 hover:bg-slovak-blue hover:text-white px-2.5 py-1 rounded-full transition-colors group-hover:bg-slovak-blue group-hover:text-white">
-                        Zobraziť detaily <ChevronRight size={10} />
+                   <div className="mt-auto pt-2 flex justify-end">
+                      <button className="text-[10px] font-bold uppercase text-gray-500 tracking-widest flex items-center gap-1 bg-gray-50 hover:bg-slovak-blue hover:text-white px-3 py-1.5 rounded-full transition-colors">
+                        Zobraziť detaily <ChevronRight size={12} />
                       </button>
                    </div>
                 </div>
@@ -124,72 +131,91 @@ const App: React.FC = () => {
               {/* 2. Next National Match Teaser */}
               <div 
                 onClick={() => setCurrentView('matches')}
-                className="bg-slovak-red rounded-3xl p-6 shadow-xl text-white relative overflow-hidden flex flex-col justify-between min-h-[220px] group cursor-pointer hover:shadow-2xl hover:-translate-y-1 transition-all duration-300"
+                className="bg-slovak-red rounded-3xl p-6 shadow-xl text-white relative overflow-hidden flex flex-col min-h-[240px] group cursor-pointer hover:shadow-2xl hover:-translate-y-1 transition-all duration-300"
               >
-                 <div className="absolute right-0 top-0 w-48 h-48 bg-white opacity-5 rounded-full translate-x-1/4 -translate-y-1/4 blur-3xl"></div>
-                 <div className="absolute left-0 bottom-0 w-32 h-32 bg-black opacity-10 rounded-full -translate-x-1/4 translate-y-1/4 blur-2xl"></div>
+                 {/* Background Effects */}
+                 <div className="absolute right-0 top-0 w-64 h-64 bg-white opacity-5 rounded-full translate-x-1/3 -translate-y-1/3 blur-3xl"></div>
+                 <div className="absolute left-0 bottom-0 w-48 h-48 bg-black opacity-10 rounded-full -translate-x-1/3 translate-y-1/3 blur-2xl"></div>
                  
                  {nextNationalMatch ? (
-                   <div className="relative z-10 h-full flex flex-col justify-between">
-                      <div className="flex justify-between items-start border-b border-white/20 pb-2 mb-1">
+                   <div className="relative z-10 h-full flex flex-col">
+                      
+                      {/* Header - Explicit Context */}
+                      <div className="flex justify-between items-start border-b border-white/10 pb-3 mb-4">
                          <div>
-                            <span className="text-[10px] font-bold text-red-100 uppercase tracking-widest block mb-1">Najbližší Zápas</span>
-                            <div className="flex items-center gap-2">
-                               {/* Category Badges */}
-                               <span className="bg-white text-slovak-red text-[10px] font-black px-2 py-0.5 rounded uppercase tracking-wide">
-                                  Reprezentácia
-                               </span>
-                               <span className="bg-black/20 text-white text-[10px] font-bold px-2 py-0.5 rounded uppercase">
-                                  {nextNationalMatch.category}
-                               </span>
-                            </div>
+                            <span className="text-[10px] font-bold text-red-100 uppercase tracking-widest block mb-1">
+                               Najbližší Zápas
+                            </span>
+                            <h3 className="text-xl font-black text-white uppercase tracking-tight flex items-center gap-2">
+                               Reprezentácia <span className="opacity-50">•</span> {nextNationalMatch.category}
+                            </h3>
                          </div>
-                         <div className="text-right">
-                             {/* LIVE Indicator for Upcoming Match */}
-                            <div className="flex items-center justify-end gap-1.5 mb-1 bg-black/20 px-2 py-0.5 rounded-full w-fit ml-auto">
-                                <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                                <span className="text-[9px] font-bold text-white uppercase tracking-wide">Plánované vysielanie naživo</span>
-                            </div>
-                            <div className="flex items-center gap-1 text-xs font-bold text-white mb-0 justify-end">
-                               <Calendar size={12} /> {nextNationalMatch.date}
-                            </div>
+                         
+                         {/* Live Badge */}
+                         <div className="flex items-center gap-1.5 bg-black/20 px-2 py-1 rounded-full border border-white/10 backdrop-blur-sm">
+                            <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse shadow-[0_0_8px_rgba(74,222,128,0.8)]"></div>
+                            <span className="text-[9px] font-bold text-white uppercase tracking-wide">Vysielané naživo</span>
                          </div>
-                      </div>
-
-                      {/* Competition Name (Small below header) */}
-                      <div className="text-[10px] font-medium text-red-100 flex items-center gap-1 mb-2">
-                         <Trophy size={10} /> {nextNationalMatch.competition}
                       </div>
                       
-                      <div className="flex items-center gap-4 py-2">
-                         <div className="flex -space-x-4 shrink-0">
-                            <div className="w-16 h-16 bg-white rounded-full p-2 flex items-center justify-center shadow-lg border-2 border-red-500 z-10">
+                      {/* Competition */}
+                      <div className="flex items-center gap-1 text-[11px] font-bold text-red-100 uppercase tracking-wide mb-4">
+                         <Trophy size={12} /> {nextNationalMatch.competition}
+                      </div>
+
+                      {/* Main Matchup */}
+                      <div className="flex items-center gap-4 mb-6">
+                         <div className="flex -space-x-3 shrink-0">
+                            <div className="w-14 h-14 bg-white rounded-full p-2 flex items-center justify-center shadow-lg border-2 border-red-500 z-10">
                                <img src={nextNationalMatch.homeTeam.logo} className="w-full h-full object-contain" />
                             </div>
-                            <div className="w-16 h-16 bg-white rounded-full p-2 flex items-center justify-center shadow-lg border-2 border-red-500">
+                            <div className="w-14 h-14 bg-white rounded-full p-2 flex items-center justify-center shadow-lg border-2 border-red-500">
                                <img src={nextNationalMatch.awayTeam.logo} className="w-full h-full object-contain" />
                             </div>
                          </div>
-                         <div className="flex flex-col">
-                            {/* Removed 'Zápas' label as requested, just showing matchup */}
-                            <div className="font-black text-xl leading-tight text-white mb-1">
-                               {nextNationalMatch.homeTeam.shortName} vs. {nextNationalMatch.awayTeam.shortName}
+                         <div>
+                            <div className="text-2xl font-black leading-none text-white mb-1">
+                               {nextNationalMatch.homeTeam.shortName} <span className="opacity-50 text-lg mx-1">vs</span> {nextNationalMatch.awayTeam.shortName}
                             </div>
-                            <div className="flex items-center gap-1 text-xs text-red-100 font-medium bg-black/20 px-2 py-1 rounded w-fit">
-                               <MapPin size={12} /> {nextNationalMatch.venue.split(',')[0]}
-                            </div>
-                         </div>
-                         <div className="ml-auto text-xl font-black">
-                            {nextNationalMatch.time}
+                            <span className="text-xs font-medium text-red-100 opacity-80">Oficiálny medzinárodný zápas</span>
                          </div>
                       </div>
 
-                      {/* Action Footer */}
-                      <div className="mt-2 flex justify-end">
-                          <span className="text-[9px] font-bold uppercase text-white tracking-widest flex items-center gap-1 bg-black/20 px-2.5 py-1 rounded-full backdrop-blur-sm group-hover:bg-white group-hover:text-slovak-red transition-colors">
-                           Zobraziť detaily <ChevronRight size={10} />
-                         </span>
+                      {/* Info Box (Date/Time/Venue) - Explicit Clarity */}
+                      <div className="mt-auto bg-black/20 rounded-xl p-3 flex items-center justify-between border border-white/5 backdrop-blur-sm">
+                          <div className="flex items-center gap-3 pr-4 border-r border-white/10">
+                             <div className="text-center">
+                                <span className="block text-[9px] font-bold text-red-200 uppercase">Dátum</span>
+                                <div className="flex items-center gap-1.5 font-bold text-sm">
+                                   <Calendar size={14} /> {nextNationalMatch.date}
+                                </div>
+                             </div>
+                          </div>
+                          
+                          <div className="flex items-center gap-3 px-4 border-r border-white/10">
+                             <div className="text-center">
+                                <span className="block text-[9px] font-bold text-red-200 uppercase">Čas</span>
+                                <div className="flex items-center gap-1.5 font-bold text-sm">
+                                   <Clock size={14} /> {nextNationalMatch.time}
+                                </div>
+                             </div>
+                          </div>
+
+                          <div className="pl-2 flex-1 overflow-hidden">
+                             <span className="block text-[9px] font-bold text-red-200 uppercase">Miesto</span>
+                             <div className="flex items-center gap-1.5 font-bold text-xs truncate">
+                                <MapPin size={12} className="shrink-0" /> {nextNationalMatch.venue.split(',')[0]}
+                             </div>
+                          </div>
                       </div>
+                      
+                      {/* Small Detail Link */}
+                      <div className="absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity">
+                         <div className="bg-white text-slovak-red p-1 rounded-full shadow-lg">
+                            <ChevronRight size={14} />
+                         </div>
+                      </div>
+
                    </div>
                  ) : (
                    <div className="flex flex-col items-center justify-center text-center h-full">
@@ -202,13 +228,13 @@ const App: React.FC = () => {
               {/* 3. Player of the Week Card */}
               <div 
                 onClick={() => setCurrentView('reprezentacia')}
-                className="bg-transparent rounded-3xl p-0 shadow-xl flex flex-col justify-between h-full group cursor-pointer hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 relative overflow-visible min-h-[220px]"
+                className="bg-transparent rounded-3xl p-0 shadow-xl flex flex-col justify-between h-full group cursor-pointer hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 relative overflow-visible min-h-[240px]"
               >
                   {/* Background (Clipped) */}
                   <div className="absolute inset-0 bg-gradient-to-b from-gray-50 via-white to-white z-0 rounded-3xl overflow-hidden border-t-4 border-white"></div>
 
                   {/* Header */}
-                  <div className="relative z-10 px-6 pt-6 pb-0">
+                  <div className="relative z-10 px-5 pt-5 pb-0">
                      <div className="flex justify-between items-start mb-1">
                          <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest block mt-[3px]">
                             Hráč Týždňa
