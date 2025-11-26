@@ -31,14 +31,6 @@ export const MatchListTable: React.FC<MatchListTableProps> = ({ matches }) => {
   const totalPages = Math.ceil(filteredMatches.length / itemsPerPage);
   const paginatedMatches = filteredMatches.slice((page - 1) * itemsPerPage, page * itemsPerPage);
 
-  // Helper to group matches by date
-  const groupedMatches = paginatedMatches.reduce((acc, match) => {
-    const fullDate = formatDate(match.date);
-    if (!acc[fullDate]) acc[fullDate] = [];
-    acc[fullDate].push(match);
-    return acc;
-  }, {} as Record<string, Match[]>);
-
   // Reset page when tab changes
   const handleTabChange = (tab: 'VŠETKY' | 'REPREZENTÁCIA' | 'LIGA') => {
     setActiveTab(tab);
@@ -48,25 +40,25 @@ export const MatchListTable: React.FC<MatchListTableProps> = ({ matches }) => {
   return (
     <div className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden font-sans flex flex-col">
       {/* Header Section */}
-      <div className="px-8 py-10 md:px-12 md:py-12 border-b border-gray-100 flex flex-col xl:flex-row justify-between items-start xl:items-end bg-white gap-6">
-        <div>
+      <div className="px-4 py-8 md:px-12 md:py-12 border-b border-gray-100 flex flex-col xl:flex-row justify-between items-start xl:items-end bg-white gap-6">
+        <div className="w-full">
            <span className="text-slovak-red font-bold text-xs uppercase tracking-widest mb-2 block">SLOVENSKÁ LIGA A REPREZENTÁCIA</span>
-           <h3 className="text-4xl md:text-5xl font-black tracking-tighter text-slovak-blue mb-6 uppercase">NAJBLIŽŠIE ZÁPASY</h3>
+           <h3 className="text-5xl md:text-5xl font-black tracking-tighter text-slovak-blue mb-6 uppercase leading-none">NAJBLIŽŠIE ZÁPASY</h3>
            
            {/* Tabs */}
-           <div className="flex flex-wrap gap-2">
+           <div className="flex flex-nowrap gap-2 overflow-x-auto hide-scrollbar pb-2 md:pb-0 w-full">
              {(['VŠETKY', 'REPREZENTÁCIA', 'LIGA'] as const).map((tab) => (
                <button
                  key={tab}
                  onClick={() => handleTabChange(tab)}
-                 className={`px-6 py-2.5 rounded-full text-sm font-bold transition-all duration-300 border uppercase tracking-wide flex items-center gap-2 ${
+                 className={`px-3 py-2 md:px-6 md:py-2.5 rounded-full text-[10px] md:text-sm font-bold transition-all duration-300 border uppercase tracking-wide flex items-center gap-1.5 md:gap-2 whitespace-nowrap ${
                    activeTab === tab 
-                     ? 'bg-slovak-blue text-white border-slovak-blue shadow-lg shadow-blue-900/20' 
+                     ? 'bg-slovak-blue text-white border-slovak-blue' 
                      : 'bg-white text-gray-500 border-gray-200 hover:border-gray-300 hover:bg-gray-50'
                  }`}
                >
-                 {tab === 'REPREZENTÁCIA' && <img src="https://flagcdn.com/w20/sk.png" alt="SK" className="w-5 h-auto" />}
-                 {tab === 'LIGA' && <Trophy size={14} />}
+                 {tab === 'REPREZENTÁCIA' && <img src="https://flagcdn.com/w20/sk.png" alt="SK" className="w-4 h-auto md:w-5" />}
+                 {tab === 'LIGA' && <Trophy size={12} className="md:w-[14px] md:h-[14px]" />}
                  {tab === 'VŠETKY' ? 'VŠETKY' : tab === 'LIGA' ? 'LIGA' : 'REPREZENTÁCIA'}
                </button>
              ))}
@@ -77,8 +69,8 @@ export const MatchListTable: React.FC<MatchListTableProps> = ({ matches }) => {
          </button>
       </div>
       
-      {/* Table Section */}
-      <div className="overflow-x-auto flex-1 min-h-[400px]">
+      {/* Table Section - Desktop */}
+      <div className="hidden md:block overflow-x-auto flex-1 min-h-[400px]">
         {paginatedMatches.length > 0 ? (
           <table className="w-full min-w-[1000px] text-sm text-gray-900">
             <thead>
@@ -96,7 +88,7 @@ export const MatchListTable: React.FC<MatchListTableProps> = ({ matches }) => {
               {paginatedMatches.map((match) => {
                 const isFinal = match.status === MatchStatus.FINAL;
                 const isLive = match.status === MatchStatus.LIVE;
-                const hasStream = match.id === 'm_next_6'; // Specifically for the England match per request
+                const hasStream = match.id === 'm_next_6';
                 
                 return (
                   <tr key={match.id} className="group hover:bg-gray-50 transition-colors h-20">
@@ -164,44 +156,99 @@ export const MatchListTable: React.FC<MatchListTableProps> = ({ matches }) => {
           </div>
         )}
       </div>
+
+      {/* Mobile List View - Compact Modern Design */}
+      <div className="md:hidden flex flex-col divide-y divide-gray-50">
+         {paginatedMatches.length > 0 ? (
+            paginatedMatches.map(match => {
+               const isFinal = match.status === MatchStatus.FINAL;
+               const isLive = match.status === MatchStatus.LIVE;
+               const hasStream = match.id === 'm_next_6';
+
+               return (
+                 <div key={match.id} className="p-3 flex flex-col gap-2">
+                    {/* Row 1: Date and League */}
+                    <div className="flex justify-between items-center text-[10px] font-bold text-gray-400 uppercase tracking-wide">
+                       <div className="flex items-center gap-2">
+                          <span>{formatDate(match.date)}</span>
+                          {hasStream && <Video size={12} className="text-slovak-red animate-pulse" fill="currentColor" />}
+                       </div>
+                       <span className="bg-gray-50 px-2 py-0.5 rounded text-gray-500">{match.competition}</span>
+                    </div>
+                    
+                    {/* Row 2: Teams and Score */}
+                    <div className="flex items-center justify-between">
+                       <div className="flex items-center gap-2 flex-1">
+                          <div className="w-8 h-8 flex items-center justify-center">
+                             <img src={match.homeTeam.logo} className="w-full h-full object-contain" />
+                          </div>
+                          <span className="text-xs font-bold text-gray-900 leading-tight">{match.homeTeam.shortName}</span>
+                       </div>
+                       
+                       <div className="px-3 text-center">
+                          {isFinal || isLive ? (
+                             <span className="text-lg font-black text-slovak-blue">{match.scoreHome}:{match.scoreAway}</span>
+                          ) : (
+                             <span className="text-lg font-black text-slovak-blue">{match.time}</span>
+                          )}
+                       </div>
+
+                       <div className="flex items-center gap-2 flex-1 justify-end text-right">
+                          <span className="text-xs font-bold text-gray-900 leading-tight">{match.awayTeam.shortName}</span>
+                          <div className="w-8 h-8 flex items-center justify-center">
+                             <img src={match.awayTeam.logo} className="w-full h-full object-contain" />
+                          </div>
+                       </div>
+                    </div>
+                    
+                    {/* Row 3: Venue */}
+                    <div className="flex justify-center">
+                       <span className="text-[9px] text-gray-400 flex items-center gap-1">
+                          <MapPin size={9} /> {match.venue.split(',')[0]}
+                       </span>
+                    </div>
+                 </div>
+               )
+            })
+         ) : (
+            <div className="p-8 text-center text-gray-400 text-sm font-medium">
+               Žiadne zápasy
+            </div>
+         )}
+      </div>
       
-      {/* Pagination Footer */}
+      {/* Pagination Footer - Compact */}
       {totalPages > 1 && (
-        <div className="border-t border-gray-100 p-6 bg-gray-50/50 flex justify-end items-center gap-4">
-            <span className="text-xs font-bold text-gray-400 uppercase tracking-widest mr-2">Strana {page} z {totalPages}</span>
-            
+        <div className="border-t border-gray-100 p-4 bg-gray-50/50 flex justify-center items-center gap-3">
             <button 
               onClick={() => setPage(Math.max(1, page - 1))}
               disabled={page === 1}
-              className={`w-12 h-12 rounded-full flex items-center justify-center border transition-all ${
+              className={`w-8 h-8 rounded-full flex items-center justify-center border transition-all ${
                 page === 1 
                   ? 'border-gray-200 text-gray-300 cursor-not-allowed' 
                   : 'bg-white border-gray-200 text-slovak-blue hover:bg-slovak-blue hover:text-white hover:border-slovak-blue shadow-sm'
               }`}
             >
-               <ChevronLeft size={20} />
+               <ChevronLeft size={16} />
             </button>
+            
+            <span className="text-[9px] font-bold text-gray-400 uppercase tracking-widest bg-white px-3 py-1.5 rounded-full border border-gray-100">
+               {page}/{totalPages}
+            </span>
             
             <button 
                onClick={() => setPage(Math.min(totalPages, page + 1))}
                disabled={page === totalPages}
-               className={`w-12 h-12 rounded-full flex items-center justify-center border transition-all ${
+               className={`w-8 h-8 rounded-full flex items-center justify-center border transition-all ${
                 page === totalPages
                   ? 'border-gray-200 text-gray-300 cursor-not-allowed'
                   : 'bg-white border-gray-200 text-slovak-blue hover:bg-slovak-blue hover:text-white hover:border-slovak-blue shadow-sm'
                }`}
             >
-               <ChevronRight size={20} />
+               <ChevronRight size={16} />
             </button>
         </div>
       )}
-
-      {/* Mobile Hint */}
-      <div className="p-4 md:hidden text-center border-t border-gray-100 bg-gray-50">
-         <div className="flex items-center justify-center gap-2 text-xs font-bold text-gray-400 uppercase tracking-widest">
-            <ArrowRight size={14} /> Posuňte pre zobrazenie
-         </div>
-      </div>
     </div>
   );
 };

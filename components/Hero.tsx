@@ -17,7 +17,7 @@ export const Hero: React.FC = () => {
   const prevSlide = () => setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
 
   return (
-    <div className="relative w-full h-[420px] md:h-[580px] text-white overflow-hidden rounded-b-[40px] md:rounded-b-[60px] shadow-2xl mx-auto max-w-[1920px] group bg-slovak-blue">
+    <div className="relative w-full h-[500px] md:h-[580px] text-white overflow-hidden rounded-b-[40px] md:rounded-b-[60px] shadow-2xl mx-auto max-w-[1920px] group bg-slovak-blue">
       
       {/* Background Slides */}
       {slides.map((slide, index) => (
@@ -74,9 +74,9 @@ export const Hero: React.FC = () => {
               </p>
 
               <div className="pt-6 flex flex-wrap gap-4">
-                 <button className="bg-white text-slovak-blue hover:bg-slovak-red hover:text-white px-8 py-4 rounded-full font-black text-base md:text-lg transition-all shadow-xl flex items-center gap-3 group/btn transform hover:-translate-y-1">
+                 <button className="bg-white text-slovak-blue hover:bg-slovak-red hover:text-white px-5 py-2.5 md:px-6 md:py-3 rounded-full font-black text-xs md:text-sm transition-all shadow-xl flex items-center gap-2 group/btn transform hover:-translate-y-1">
                     Čítať článok 
-                    <ArrowRight size={20} className="group-hover/btn:translate-x-1 transition-transform" />
+                    <ArrowRight size={16} className="group-hover/btn:translate-x-1 transition-transform" />
                  </button>
               </div>
            </div>

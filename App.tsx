@@ -19,23 +19,20 @@ const App: React.FC = () => {
   const [currentView, setCurrentView] = useState('home');
 
   // 1. Filter ONLY National Team Matches
-  // Strictly filter for matches involving 'svk' team ID, to avoid showing Club matches that might have category='ŽENY'
   const nationalMatches = MATCHES.filter(m => 
     m.homeTeam.id === 'svk' || m.awayTeam.id === 'svk'
   );
 
   // 2. Find Last Result (Status FINAL)
-  // We look for one specifically marked as final, or default to the first found for safety
   const lastNationalResult = nationalMatches.find(m => m.status === 'FINAL') || nationalMatches[0];
 
   // 3. Find Next Upcoming National Match
   const nextNationalMatch = nationalMatches.find(m => m.status === 'UPCOMING');
 
-  // General upcoming matches for the table list (can remain mixed or be national only based on preference, keeping mixed for the table)
+  // General upcoming matches for the table list
   const upcomingMatchesTable = MATCHES.filter(m => m.status === 'UPCOMING').slice(0, 10);
 
   const renderContent = () => {
-    // Simple routing for now - mostly handles the main sections
     if (currentView === 'matches' || currentView === 'matches-field' || currentView === 'matches-indoor') {
       return <MatchCenter />;
     }
@@ -54,31 +51,30 @@ const App: React.FC = () => {
       <div className="pb-0">
         <Hero />
         
-        {/* Overlapping Section: Last Result & Next Match Widget (NATIONAL TEAM ONLY) */}
-        <div className="container mx-auto px-4 md:px-8 relative z-20 -mt-7 mb-8">
-           {/* Custom Grid: Match cards wider (approx 40% each), Player card narrower (approx 20%) */}
+        {/* Widgets Section - Moved down (mt-8) to sit below hero */}
+        <div className="container mx-auto px-4 md:px-8 relative z-20 mt-8 mb-12">
            <div className="grid grid-cols-1 lg:grid-cols-[2fr_2fr_1.2fr] gap-6">
               
               {/* 1. Last National Result Card */}
               {lastNationalResult && (
                 <div 
                   onClick={() => setCurrentView('matches')}
-                  className="bg-white rounded-3xl p-6 shadow-xl border-t-4 border-slovak-blue flex flex-col justify-between h-full group cursor-pointer hover:shadow-2xl transition-all duration-300 relative overflow-hidden min-h-[240px]"
+                  className="bg-white rounded-3xl p-6 border border-gray-100 shadow-sm hover:shadow-md border-t-4 border-t-slovak-blue flex flex-col justify-between h-full group cursor-pointer transition-all duration-300 relative overflow-hidden min-h-[240px]"
                 >
                    {/* Header - Explicit Context */}
-                   <div className="flex justify-between items-start border-b border-gray-100 pb-3 mb-2">
+                   <div className="flex flex-col md:flex-row md:justify-between items-start border-b border-gray-100 pb-3 mb-2 gap-2 md:gap-0">
                       <div>
                         <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest block mb-1">
                           Posledný Výsledok
                         </span>
-                        <h3 className="text-[18px] font-black text-slovak-blue uppercase tracking-tight flex items-center gap-2">
+                        <h3 className="text-[16px] md:text-[18px] font-black text-slovak-blue uppercase tracking-tight flex items-center gap-2">
                            Reprezentácia <span className="text-slovak-red">•</span> {lastNationalResult.category}
                         </h3>
                       </div>
-                      <div className="text-right">
+                      <div className="flex md:flex-col items-center md:items-end gap-2 md:gap-0 w-full md:w-auto justify-between md:justify-start">
                          <div className="flex items-center gap-1.5 justify-end bg-blue-50 px-2 py-1 rounded-full border border-blue-100 mb-1">
                              <PlayCircle size={10} className="text-slovak-blue" />
-                             <span className="text-[9px] font-bold text-slovak-blue uppercase tracking-wide">Video záznam</span>
+                             <span className="text-[8px] md:text-[9px] font-bold text-slovak-blue uppercase tracking-wide whitespace-nowrap">Video záznam</span>
                          </div>
                          <span className="text-xs font-bold text-gray-400 block">{lastNationalResult.date}</span>
                       </div>
@@ -131,7 +127,7 @@ const App: React.FC = () => {
               {/* 2. Next National Match Teaser */}
               <div 
                 onClick={() => setCurrentView('matches')}
-                className="bg-slovak-red rounded-3xl p-6 shadow-xl text-white relative overflow-hidden flex flex-col min-h-[240px] group cursor-pointer hover:shadow-2xl transition-all duration-300"
+                className="bg-slovak-red rounded-3xl p-6 border border-red-600 shadow-sm hover:shadow-md text-white relative overflow-hidden flex flex-col min-h-[240px] group cursor-pointer transition-all duration-300"
               >
                  {/* Background Effects */}
                  <div className="absolute right-0 top-0 w-64 h-64 bg-white opacity-5 rounded-full translate-x-1/3 -translate-y-1/3 blur-3xl"></div>
@@ -141,20 +137,20 @@ const App: React.FC = () => {
                    <div className="relative z-10 h-full flex flex-col">
                       
                       {/* Header - Explicit Context */}
-                      <div className="flex justify-between items-start border-b border-white/10 pb-3 mb-4">
+                      <div className="flex flex-col md:flex-row justify-between items-start border-b border-white/10 pb-3 mb-4 gap-2 md:gap-0">
                          <div>
                             <span className="text-[10px] font-bold text-red-100 uppercase tracking-widest block mb-1">
                                Najbližší Zápas
                             </span>
-                            <h3 className="text-[18px] font-black text-white uppercase tracking-tight flex items-center gap-2">
+                            <h3 className="text-[16px] md:text-[18px] font-black text-white uppercase tracking-tight flex items-center gap-2">
                                Reprezentácia <span className="opacity-50">•</span> {nextNationalMatch.category}
                             </h3>
                          </div>
                          
                          {/* Live Badge */}
-                         <div className="flex items-center gap-1.5 bg-black/20 px-2 py-1 rounded-full border border-white/10 backdrop-blur-sm">
+                         <div className="flex items-center gap-1.5 bg-black/20 px-2 py-1 rounded-full border border-white/10 backdrop-blur-sm self-start md:self-auto">
                             <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse shadow-[0_0_8px_rgba(74,222,128,0.8)]"></div>
-                            <span className="text-[9px] font-bold text-white uppercase tracking-wide">Vysielané naživo</span>
+                            <span className="text-[8px] md:text-[9px] font-bold text-white uppercase tracking-wide whitespace-nowrap">Vysielané naživo</span>
                          </div>
                       </div>
                       
@@ -228,10 +224,10 @@ const App: React.FC = () => {
               {/* 3. Player of the Week Card */}
               <div 
                 onClick={() => setCurrentView('reprezentacia')}
-                className="bg-transparent rounded-3xl p-0 shadow-xl flex flex-col justify-between h-full group cursor-pointer hover:shadow-2xl transition-all duration-300 relative overflow-visible min-h-[240px]"
+                className="bg-transparent rounded-3xl p-0 border-0 flex flex-col justify-between h-full group cursor-pointer transition-all duration-300 relative overflow-visible min-h-[240px]"
               >
                   {/* Background (Clipped) */}
-                  <div className="absolute inset-0 bg-gradient-to-b from-gray-50 via-white to-white z-0 rounded-3xl overflow-hidden border-t-4 border-white"></div>
+                  <div className="absolute inset-0 bg-gradient-to-b from-gray-50 via-white to-white z-0 rounded-3xl overflow-hidden border-t-4 border-white shadow-sm"></div>
 
                   {/* Header */}
                   <div className="relative z-10 px-5 pt-5 pb-0">
@@ -287,13 +283,13 @@ const App: React.FC = () => {
            <MatchListTable matches={upcomingMatchesTable} />
         </div>
 
-        {/* 4. Projects Carousel (New Section) */}
+        {/* 4. Projects Carousel */}
         <ProjectsCarousel />
         
-        {/* 5. Partners (Moved UP) */}
+        {/* 5. Partners */}
         <Partners />
 
-        {/* 6. Social Media (Moved DOWN - Includes Instagram) */}
+        {/* 6. Social Media */}
         <SocialMedia />
 
       </div>

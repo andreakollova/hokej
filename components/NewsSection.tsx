@@ -35,25 +35,25 @@ export const NewsSection: React.FC = () => {
   return (
     <div className="container mx-auto px-4 md:px-8 py-8 md:py-12">
       {/* Header with Toggles */}
-      <div className="flex flex-col md:flex-row justify-between items-end mb-6 gap-6">
-         <div className="-mt-5">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-6 gap-6">
+         <div className="-mt-5 w-full">
             <span className="text-slovak-red font-bold text-xs uppercase tracking-widest mb-2 block">ZO SVETA POZEMNÉHO HOKEJA</span>
-            <h2 className="text-4xl md:text-5xl font-black tracking-tighter text-slovak-blue mb-4 uppercase">AKTUALITY</h2>
+            <h2 className="text-5xl md:text-5xl font-black tracking-tighter text-slovak-blue mb-4 uppercase">AKTUALITY</h2>
             
-            {/* Toggles */}
-            <div className="flex flex-wrap gap-2">
+            {/* Toggles - Optimized for Mobile */}
+            <div className="flex flex-nowrap gap-2 overflow-x-auto hide-scrollbar pb-2 md:pb-0 w-full">
                {(['VŠETKY', 'REPREZENTÁCIA', 'LIGA'] as const).map((tab) => (
                  <button
                    key={tab}
                    onClick={() => setActiveTab(tab)}
-                   className={`px-6 py-2.5 rounded-full text-sm font-bold transition-all duration-300 border flex items-center gap-2 uppercase ${
+                   className={`px-3 py-2 md:px-6 md:py-2.5 rounded-full text-[10px] md:text-sm font-bold transition-all duration-300 border flex items-center gap-1.5 md:gap-2 uppercase whitespace-nowrap ${
                      activeTab === tab 
-                       ? 'bg-slovak-blue text-white border-slovak-blue shadow-lg shadow-blue-900/20' 
+                       ? 'bg-slovak-blue text-white border-slovak-blue' 
                        : 'bg-white text-gray-500 border-gray-200 hover:border-gray-300 hover:bg-gray-50'
                    }`}
                  >
-                   {tab === 'REPREZENTÁCIA' && <img src="https://flagcdn.com/w20/sk.png" alt="SK" className="w-5 h-auto" />}
-                   {tab === 'LIGA' && <Trophy size={14} />}
+                   {tab === 'REPREZENTÁCIA' && <img src="https://flagcdn.com/w20/sk.png" alt="SK" className="w-4 h-auto md:w-5" />}
+                   {tab === 'LIGA' && <Trophy size={12} className="md:w-[14px] md:h-[14px]" />}
                    {tab}
                  </button>
                ))}
@@ -74,7 +74,7 @@ export const NewsSection: React.FC = () => {
             {/* Left: Featured Hero Card */}
             <div className="lg:col-span-8 flex flex-col">
               {featuredNews && (
-                <div className="relative h-full min-h-[500px] md:min-h-[600px] w-full rounded-xl overflow-hidden group cursor-pointer shadow-2xl shadow-blue-900/20 ring-1 ring-black/5">
+                <div className="relative h-full min-h-[400px] md:min-h-[600px] w-full rounded-xl overflow-hidden group cursor-pointer shadow-2xl shadow-blue-900/20 ring-1 ring-black/5">
                   <img 
                     src={featuredNews.imageUrl} 
                     alt={featuredNews.title}
@@ -84,27 +84,27 @@ export const NewsSection: React.FC = () => {
                   <div className="absolute inset-0 bg-gradient-to-t from-slovak-blue via-slovak-blue/90 to-transparent mix-blend-multiply opacity-100"></div>
                   <div className="absolute inset-0 bg-gradient-to-t from-slovak-blue via-transparent to-transparent opacity-80"></div>
                   
-                  <div className="absolute bottom-0 left-0 p-8 md:p-14 text-white w-full z-10">
-                    <div className="flex items-center gap-3 mb-6 animate-in fade-in slide-in-from-bottom-4 duration-700">
-                      <span className="bg-slovak-red text-white px-5 py-2 text-xs font-black uppercase rounded-full tracking-widest shadow-lg shadow-red-900/20">
+                  <div className="absolute bottom-0 left-0 p-6 md:p-14 text-white w-full z-10">
+                    <div className="flex items-center gap-3 mb-4 md:mb-6 animate-in fade-in slide-in-from-bottom-4 duration-700">
+                      <span className="bg-slovak-red text-white px-3 py-1 md:px-5 md:py-2 text-[10px] md:text-xs font-black uppercase rounded-full tracking-widest shadow-lg shadow-red-900/20">
                           {featuredNews.category}
                       </span>
-                      <span className="text-gray-300 text-xs font-bold flex items-center gap-2 bg-white/10 px-4 py-2 rounded-full backdrop-blur-md border border-white/10">
+                      <span className="text-gray-300 text-[10px] md:text-xs font-bold flex items-center gap-2 bg-white/10 px-3 py-1 md:px-4 md:py-2 rounded-full backdrop-blur-md border border-white/10">
                         <Clock size={12} /> {featuredNews.date}
                       </span>
                     </div>
                     
-                    <h3 className="text-2xl md:text-4xl font-black leading-none mb-6 text-white transition-colors animate-in fade-in slide-in-from-bottom-6 duration-700 delay-100">
+                    <h3 className="text-xl md:text-4xl font-black leading-tight md:leading-none mb-3 md:mb-6 text-white transition-colors animate-in fade-in slide-in-from-bottom-6 duration-700 delay-100">
                       {featuredNews.title}
                     </h3>
                     
-                    <p className="text-gray-200 text-lg md:text-xl line-clamp-2 max-w-3xl font-medium leading-relaxed opacity-90 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-200">
+                    <p className="text-gray-200 text-sm md:text-xl line-clamp-3 max-w-3xl font-medium leading-relaxed opacity-90 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-200">
                       {featuredNews.snippet}
                     </p>
 
                     {/* Always visible button */}
-                    <div className="mt-8 flex items-center gap-4">
-                        <span className="text-sm font-bold uppercase tracking-widest flex items-center gap-2 text-white">
+                    <div className="mt-6 md:mt-8 flex items-center gap-4">
+                        <span className="text-xs md:text-sm font-bold uppercase tracking-widest flex items-center gap-2 text-white">
                           Čítať viac <ArrowRight size={16} />
                         </span>
                     </div>
@@ -156,7 +156,7 @@ export const NewsSection: React.FC = () => {
                       </div>
                   </div>
                   
-                  <button className="w-full mt-12 py-3 rounded-lg bg-gray-50 text-gray-600 text-xs font-black uppercase tracking-widest hover:bg-slovak-blue hover:text-white transition-all border border-gray-100 shadow-sm hover:shadow-lg mt-auto">
+                  <button className="w-full mt-16 py-3 rounded-lg bg-gray-50 text-gray-600 text-xs font-black uppercase tracking-widest hover:bg-slovak-blue hover:text-white transition-all border border-gray-100 shadow-sm hover:shadow-lg mt-auto">
                     Zobraziť viac článkov
                   </button>
               </div>

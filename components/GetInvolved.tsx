@@ -44,15 +44,15 @@ export const GetInvolved: React.FC = () => {
 
   return (
     <div className="container mx-auto px-4 md:px-8 py-12">
-      <div className="flex flex-col md:flex-row justify-between items-end mb-8 gap-6">
-         <div>
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 gap-6">
+         <div className="w-full">
             <span className="text-slovak-red font-bold text-xs uppercase tracking-widest mb-2 block">Komunita</span>
-            <h2 className="text-4xl md:text-5xl font-black uppercase text-slovak-blue tracking-tighter">Zapoj sa do hry</h2>
-            <p className="text-gray-500 mt-4 max-w-xl text-lg font-medium">
+            <h2 className="text-5xl md:text-5xl font-black uppercase text-slovak-blue tracking-tighter">Zapoj sa do hry</h2>
+            <p className="text-gray-500 mt-4 max-w-xl text-sm md:text-lg font-medium leading-relaxed">
               Pozemný hokej je šport pre každého. Či už na ihrisku alebo mimo neho, miesto u nás máš isté.
             </p>
          </div>
-         <button className="bg-white border-2 border-gray-100 text-gray-900 font-bold px-6 py-4 rounded-full hover:bg-black hover:text-white hover:border-black transition-all shadow-sm flex items-center gap-3">
+         <button className="self-start bg-white border-2 border-gray-100 text-gray-900 font-bold px-6 py-4 rounded-full hover:bg-black hover:text-white hover:border-black transition-all shadow-sm flex items-center gap-3 md:self-end">
             <img src="https://szph.sk/wp-content/uploads/2024/11/SZPH-logo-znak-1.png" className="w-8 h-8 object-contain" alt="SZPH" />
             Ako sa hrá pozemný hokej?
          </button>

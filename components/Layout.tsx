@@ -23,6 +23,11 @@ const TOP_NAV_ITEMS: NavItem[] = [
       { id: 'stanovy', label: 'Stanovy a predpisy' },
       { id: 'doping', label: 'Doping v športe' },
       { id: 'hospodarenie', label: 'Výsledky hospodárenia' },
+      { id: 'dk', label: 'Disciplinárna komisia' },
+      { id: 'dobrovolnictvo', label: 'Dobrovoľnícka činnosť' },
+      { id: 'zmluvy', label: 'Zmluvy' },
+      { id: 'zoznamy', label: 'Zoznamy' },
+      { id: 'ostatne-items', label: 'Ostatné' }
     ]
   },
   {
@@ -36,26 +41,16 @@ const TOP_NAV_ITEMS: NavItem[] = [
     ]
   },
   {
-    id: 'ostatne',
-    label: 'Ostatné',
-    children: [
-      { id: 'dk', label: 'Disciplinárna komisia' },
-      { id: 'dobrovolnictvo', label: 'Dobrovoľnícka činnosť' },
-      { id: 'zmluvy', label: 'Zmluvy' },
-      { id: 'zoznamy', label: 'Zoznamy' },
-    ]
-  },
-  {
     id: 'vzdelavanie',
     label: 'Vzdelávanie',
   },
   {
     id: 'kalendar',
-    label: 'Kalendár akcií',
+    label: 'Kalendár',
   }
 ];
 
-// 2. Main Functional Menu (White Bar)
+// 2. Main Functional Menu
 const MAIN_NAV_ITEMS: NavItem[] = [
   {
     id: 'pozemny-hokej',
@@ -108,7 +103,6 @@ const Layout: React.FC<LayoutProps> = ({ children, currentView, onChangeView }) 
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const [mobileExpanded, setMobileExpanded] = useState<string | null>(null);
   const [hoveredNav, setHoveredNav] = useState<string | null>(null);
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
 
   const handleMobileNavClick = (item: NavItem) => {
     if (item.children) {
@@ -122,13 +116,13 @@ const Layout: React.FC<LayoutProps> = ({ children, currentView, onChangeView }) 
   return (
     <div className="min-h-screen flex flex-col bg-[#F8F9FC] font-sans text-gray-900 selection:bg-slovak-red selection:text-white">
       
-      {/* 1. ULTRA MODERN TOP BAR */}
+      {/* 1. TOP BAR (Admin) */}
       <div className="bg-[#0B2144] text-white relative z-50">
         <div className="container mx-auto px-4 md:px-8">
-          <div className="flex flex-col md:flex-row justify-between items-center h-auto md:h-10 text-[9px] md:text-[10px] font-normal tracking-wider">
+          <div className="flex flex-col md:flex-row justify-between items-center h-auto md:h-9 text-[8px] md:text-[9px] font-normal tracking-wider">
             
-            {/* Left: Admin / Info Links */}
-            <div className="flex flex-wrap justify-center md:justify-start gap-4 md:gap-8 py-2 md:py-0 w-full md:w-auto border-b md:border-b-0 border-white/10">
+            {/* Left: Admin Links */}
+            <div className="flex flex-wrap justify-center md:justify-start gap-2 md:gap-6 py-2 md:py-0 w-full md:w-auto">
                {TOP_NAV_ITEMS.map((item) => (
                   <div 
                     key={item.id}
@@ -138,7 +132,7 @@ const Layout: React.FC<LayoutProps> = ({ children, currentView, onChangeView }) 
                   >
                     <button
                       onClick={() => !item.children && onChangeView(item.id)}
-                      className={`hover:text-white transition-colors flex items-center gap-1 opacity-70 hover:opacity-100 uppercase py-1 ${currentView === item.id ? 'text-slovak-red opacity-100' : ''}`}
+                      className={`hover:text-white transition-colors flex items-center gap-1 opacity-60 hover:opacity-100 uppercase py-1 ${currentView === item.id ? 'text-slovak-red opacity-100' : ''}`}
                     >
                       {item.label}
                       {item.children && <ChevronDown size={10} />}
@@ -146,7 +140,7 @@ const Layout: React.FC<LayoutProps> = ({ children, currentView, onChangeView }) 
 
                     {/* Dropdown */}
                     {item.children && hoveredNav === item.id && (
-                      <div className="absolute top-full left-0 mt-0 w-56 bg-white rounded-lg shadow-xl shadow-black/20 border border-gray-100 p-1.5 animate-in fade-in slide-in-from-top-1 duration-200 z-50">
+                      <div className="absolute top-full left-0 mt-0 w-56 bg-white rounded-lg shadow-xl shadow-black/20 border border-gray-100 p-1.5 z-50">
                          {item.children.map(subItem => (
                           <button
                             key={subItem.id}
@@ -165,19 +159,9 @@ const Layout: React.FC<LayoutProps> = ({ children, currentView, onChangeView }) 
                ))}
             </div>
 
-            {/* Right: Zone / Login */}
-            <div className="flex items-center gap-6 py-2 md:py-0 opacity-90">
-                <div className="hidden md:flex items-center gap-4 text-[10px]">
-                    <button className="hover:text-white hover:underline decoration-slovak-red underline-offset-4 decoration-2">Hráči</button>
-                    <button className="hover:text-white hover:underline decoration-slovak-red underline-offset-4 decoration-2">Tréneri</button>
-                    <button className="hover:text-white hover:underline decoration-slovak-red underline-offset-4 decoration-2">Kluby</button>
-                </div>
-                <div className="w-[1px] h-3 bg-white/20 hidden md:block"></div>
-                <button className="flex items-center gap-2 hover:text-white transition-colors">
-                    <User size={12} /> 
-                    <span>Prihlásiť sa</span>
-                </button>
-                <div className="flex items-center gap-2 md:ml-2">
+            {/* Right: Language / Small Utils */}
+            <div className="hidden md:flex items-center gap-4 opacity-80">
+                <div className="flex items-center gap-2">
                     <button className="opacity-50 hover:opacity-100 font-bold">SK</button>
                     <span className="opacity-30">/</span>
                     <button className="opacity-50 hover:opacity-100 font-bold">EN</button>
@@ -187,97 +171,111 @@ const Layout: React.FC<LayoutProps> = ({ children, currentView, onChangeView }) 
         </div>
       </div>
 
-      {/* 2. MAIN NAVIGATION (Redesigned) */}
-      <nav className="sticky top-0 z-40 bg-white shadow-sm border-b border-gray-100 h-[100px] md:h-[140px] flex items-center transition-all">
-        <div className="container mx-auto px-4 md:px-8 flex items-center justify-between">
+      {/* 2. MAIN HEADER AREA */}
+      <header className="bg-white shadow-sm border-b border-gray-100 relative z-40">
+        <div className="container mx-auto px-4 md:px-8">
           
-          {/* Logo */}
-          <div 
-            className="flex items-center gap-3 cursor-pointer shrink-0" 
-            onClick={() => onChangeView('home')}
-          >
-            <div className="w-32 h-20 md:w-64 md:h-32 relative flex items-center justify-center">
+          {/* Top Row: Login - Logo - Utilities */}
+          <div className="h-[100px] md:h-[130px] flex items-center justify-between relative">
+            
+            {/* Left: Login Button */}
+            <div className="flex-1 flex justify-start">
+               <button className="flex items-center gap-2 md:gap-3 text-slovak-blue hover:bg-blue-50 px-3 py-2 md:px-5 md:py-2.5 rounded-full transition-all group">
+                  <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-gray-100 flex items-center justify-center group-hover:bg-slovak-blue group-hover:text-white transition-colors">
+                    <User size={16} className="md:w-5 md:h-5" />
+                  </div>
+                  <span className="hidden md:block text-xs font-bold uppercase tracking-widest">Prihlásiť sa</span>
+               </button>
+            </div>
+
+            {/* Center: Logo */}
+            <div 
+              className="flex-1 flex justify-center cursor-pointer" 
+              onClick={() => onChangeView('home')}
+            >
                <img 
                  src="https://szph.sk/wp-content/uploads/2025/11/logo-field-hockey.png" 
                  alt="SZPH Logo" 
-                 className="w-full h-full object-contain"
+                 className="h-20 md:h-28 w-auto object-contain"
                />
+            </div>
+
+            {/* Right: Utilities */}
+            <div className="flex-1 flex justify-end items-center gap-2 md:gap-4">
+               <div className="hidden lg:flex items-center bg-gray-100 rounded-full px-4 py-2.5">
+                  <input 
+                    type="text" 
+                    placeholder="Hľadať..." 
+                    className="bg-transparent border-none outline-none text-sm font-medium text-gray-800 placeholder-gray-400 w-24 focus:w-40 transition-all"
+                  />
+                  <Search size={18} className="text-gray-400" />
+               </div>
+               
+               <button className="hidden md:flex items-center gap-2 bg-slovak-blue text-white px-6 py-3 rounded-full text-xs font-black uppercase tracking-widest shadow-lg shadow-blue-900/10 hover:shadow-xl hover:-translate-y-0.5 transition-all">
+                  <ShoppingBag size={16} />
+                  <span>E-Shop</span>
+               </button>
+
+               <button 
+                 className="xl:hidden p-3 text-gray-800 hover:bg-gray-100 rounded-full transition-colors"
+                 onClick={() => setIsMenuOpen(!isMenuOpen)}
+               >
+                 {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+               </button>
             </div>
           </div>
 
-          {/* Desktop Links (Centered) */}
-          <div className="hidden xl:flex items-center gap-8 h-full">
-            {MAIN_NAV_ITEMS.map((item) => (
-              <div 
-                key={item.id}
-                className="relative group h-full flex items-center"
-                onMouseEnter={() => setHoveredNav(item.id)}
-                onMouseLeave={() => setHoveredNav(null)}
-              >
-                <button
-                  onClick={() => !item.children && onChangeView(item.id)}
-                  className={`text-sm font-bold uppercase tracking-wide transition-colors relative py-2 flex items-center gap-1
-                    ${currentView === item.id ? 'text-slovak-blue' : 'text-gray-600 hover:text-slovak-blue'}
-                  `}
+          {/* Bottom Row: Navigation Links (Desktop Only) */}
+          <div className="hidden xl:flex justify-center items-center border-t border-gray-50">
+            <div className="flex items-center gap-10">
+              {MAIN_NAV_ITEMS.map((item) => (
+                <div 
+                  key={item.id}
+                  className="relative group"
+                  onMouseEnter={() => setHoveredNav(item.id)}
+                  onMouseLeave={() => setHoveredNav(null)}
                 >
-                  {item.label}
-                  {item.children && <ChevronDown size={14} strokeWidth={3} className="mt-[-2px]" />}
-                  <span className={`absolute bottom-0 left-0 w-full h-[3px] bg-slovak-red transform origin-left transition-transform duration-300 ${currentView === item.id ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'}`}></span>
-                </button>
-                
-                {/* Mega Menu / Dropdown */}
-                {item.children && hoveredNav === item.id && (
-                  <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-64 bg-white rounded-xl shadow-[0_10px_40px_-10px_rgba(0,0,0,0.1)] border border-gray-100 p-2 animate-in fade-in slide-in-from-top-4 duration-200 z-50">
-                     <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-4 h-4 bg-white transform rotate-45 border-t border-l border-gray-100"></div>
-                     <div className="relative bg-white rounded-lg overflow-hidden">
-                        {item.children.map(subItem => (
-                          <button
-                            key={subItem.id}
-                            onClick={() => {
-                              onChangeView(subItem.id);
-                              setHoveredNav(null);
-                            }}
-                            className="w-full text-left px-5 py-3 text-sm font-bold text-gray-600 hover:bg-gray-50 hover:text-slovak-blue hover:pl-7 transition-all flex items-center gap-2 uppercase border-b border-gray-50 last:border-0"
-                          >
-                            {subItem.label}
-                          </button>
-                        ))}
-                     </div>
-                  </div>
-                )}
-              </div>
-            ))}
+                  <button
+                    onClick={() => !item.children && onChangeView(item.id)}
+                    className={`text-sm font-bold uppercase tracking-widest py-5 flex items-center gap-1 transition-colors
+                      ${currentView === item.id ? 'text-slovak-red' : 'text-gray-600 hover:text-slovak-blue'}
+                    `}
+                  >
+                    {item.label}
+                    {item.children && <ChevronDown size={12} strokeWidth={3} className="mt-[-2px] opacity-50" />}
+                  </button>
+                  
+                  {/* Mega Menu */}
+                  {item.children && hoveredNav === item.id && (
+                    <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-56 bg-white rounded-xl shadow-[0_10px_40px_-10px_rgba(0,0,0,0.1)] border border-gray-100 p-2 z-50">
+                       <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-4 h-4 bg-white transform rotate-45 border-t border-l border-gray-100"></div>
+                       <div className="relative bg-white rounded-lg overflow-hidden">
+                          {item.children.map(subItem => (
+                            <button
+                              key={subItem.id}
+                              onClick={() => {
+                                onChangeView(subItem.id);
+                                setHoveredNav(null);
+                              }}
+                              className="w-full text-left px-5 py-3 text-xs font-bold text-gray-600 hover:bg-gray-50 hover:text-slovak-blue hover:pl-7 transition-all flex items-center gap-2 uppercase border-b border-gray-50 last:border-0"
+                            >
+                              {subItem.label}
+                            </button>
+                          ))}
+                       </div>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
           </div>
 
-          {/* Right Utilities */}
-          <div className="flex items-center gap-3">
-             <div className="hidden lg:flex items-center bg-gray-100 rounded-full px-4 py-2 transition-all focus-within:ring-2 focus-within:ring-slovak-blue/20 focus-within:bg-white border border-transparent focus-within:border-gray-200">
-                <input 
-                  type="text" 
-                  placeholder="Hľadať..." 
-                  className="bg-transparent border-none outline-none text-sm font-medium text-gray-800 placeholder-gray-400 w-24 focus:w-40 transition-all"
-                />
-                <Search size={16} className="text-gray-400" />
-             </div>
-             
-             <button className="hidden md:flex items-center gap-2 bg-slovak-blue text-white px-6 py-2.5 rounded-full text-sm font-bold shadow-lg shadow-blue-900/10 hover:shadow-xl hover:-translate-y-0.5 transition-all">
-                <ShoppingBag size={16} />
-                <span>E-Shop</span>
-             </button>
-
-             <button 
-               className="xl:hidden p-2 text-gray-800 hover:bg-gray-100 rounded-lg transition-colors"
-               onClick={() => setIsMenuOpen(!isMenuOpen)}
-             >
-               {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
-             </button>
-          </div>
         </div>
-      </nav>
+      </header>
       
       {/* Mobile Menu Overlay */}
       {isMenuOpen && (
-          <div className="fixed inset-0 top-[130px] bg-white z-30 overflow-y-auto xl:hidden animate-in fade-in duration-200">
+          <div className="fixed inset-0 top-[140px] bg-white z-30 overflow-y-auto xl:hidden animate-in fade-in duration-200 border-t border-gray-100">
              <div className="container mx-auto px-4 py-6">
                 <div className="mb-6 relative">
                    <input type="text" placeholder="Hľadať..." className="w-full bg-gray-50 p-4 pl-12 rounded-xl text-base font-medium outline-none" />
@@ -321,14 +319,19 @@ const Layout: React.FC<LayoutProps> = ({ children, currentView, onChangeView }) 
                    ))}
                 </div>
                 
-                <div className="mt-8">
-                   <button className="w-full bg-slovak-red text-white py-4 rounded-xl font-black text-lg shadow-lg">E-Shop</button>
+                <div className="mt-8 grid grid-cols-2 gap-4">
+                   <button className="w-full bg-slovak-blue/5 text-slovak-blue py-4 rounded-xl font-bold uppercase flex items-center justify-center gap-2">
+                      <User size={18} /> Prihlásiť sa
+                   </button>
+                   <button className="w-full bg-slovak-red text-white py-4 rounded-xl font-black uppercase shadow-lg flex items-center justify-center gap-2">
+                      <ShoppingBag size={18} /> E-Shop
+                   </button>
                 </div>
              </div>
           </div>
       )}
 
-      {/* 3. MATCH STRIP (Ticker Style) */}
+      {/* 3. MATCH STRIP */}
       <div className="w-full bg-gray-50 border-b border-gray-200 relative z-30">
           <div className="container mx-auto">
              <div className="flex items-center">
@@ -355,12 +358,12 @@ const Layout: React.FC<LayoutProps> = ({ children, currentView, onChangeView }) 
         {children}
       </main>
 
-      {/* Footer - Redesigned */}
+      {/* Footer */}
       <footer className="bg-[#0B2144] border-t border-white/10 mt-20 text-white rounded-t-xl relative z-40 overflow-hidden">
         <div className="container mx-auto px-6 py-16">
            <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
               
-              {/* Column 1: Identity & Contact */}
+              {/* Column 1 */}
               <div className="col-span-1">
                  <div className="flex items-center gap-2 mb-6">
                     <img 
@@ -383,7 +386,7 @@ const Layout: React.FC<LayoutProps> = ({ children, currentView, onChangeView }) 
                  </div>
               </div>
               
-              {/* Column 2: Dôležité Odkazy */}
+              {/* Column 2 */}
               <div className="col-span-1 md:pl-8">
                 <h4 className="font-black text-white mb-8 uppercase text-sm tracking-widest border-b border-white/10 pb-4 inline-block">DÔLEŽITÉ ODKAZY</h4>
                 <ul className="space-y-4 text-sm text-white font-bold opacity-80">
@@ -396,12 +399,12 @@ const Layout: React.FC<LayoutProps> = ({ children, currentView, onChangeView }) 
                 </ul>
               </div>
 
-              {/* Column 3: Funding Logos */}
+              {/* Column 3 */}
               <div className="col-span-1 flex flex-col items-start md:items-start">
                 <h4 className="font-black text-white mb-8 uppercase text-sm tracking-widest border-b border-white/10 pb-4 inline-block">Príspevok uznanému športu</h4>
                 <div className="flex flex-col gap-6 w-full">
                     <div className="bg-white rounded-2xl p-6 w-full max-w-[340px] flex items-center justify-center">
-                       <img src="https://szph.sk/wp-content/uploads/2025/03/rozpocet-2025-logo.jpg" className="w-full h-auto object-contain" alt="Rozpočet 2025" />
+                       <img src="https://szph.sk/wp-content/uploads/2025/03/rozpocet-2025-logo.jpg" className="w-full h-auto object-contain h-24" alt="Rozpočet 2025" />
                     </div>
                     <div className="bg-white rounded-xl p-4 w-full max-w-[340px] flex items-center justify-center">
                         <img src="https://szph.sk/wp-content/uploads/2024/08/Screenshot-2024-05-24-133021-470x189-1.png" className="h-24 w-full object-contain" alt="Ministerstvo" />
