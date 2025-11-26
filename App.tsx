@@ -228,7 +228,7 @@ const App: React.FC = () => {
               {/* 3. Player of the Week Card */}
               <div 
                 onClick={() => setCurrentView('reprezentacia')}
-                className="bg-transparent rounded-3xl p-0 shadow-xl flex flex-col justify-between h-full group cursor-pointer hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 relative overflow-visible min-h-[240px]"
+                className="bg-transparent rounded-3xl p-0 shadow-xl flex flex-col justify-between h-full group cursor-pointer hover:shadow-2xl transition-all duration-300 relative overflow-visible min-h-[240px]"
               >
                   {/* Background (Clipped) */}
                   <div className="absolute inset-0 bg-gradient-to-b from-gray-50 via-white to-white z-0 rounded-3xl overflow-hidden border-t-4 border-white"></div>
