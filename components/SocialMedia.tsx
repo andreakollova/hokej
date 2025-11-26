@@ -1,67 +1,83 @@
 
-import React from 'react';
-import { INSTAGRAM_POSTS, VIDEOS } from '../constants';
-import { Instagram, Heart, Play } from 'lucide-react';
+import React, { useRef } from 'react';
+import { VIDEOS } from '../constants';
+import { Play, Tv, ChevronLeft, ChevronRight } from 'lucide-react';
 
 export const SocialMedia: React.FC = () => {
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  const scroll = (direction: 'left' | 'right') => {
+    if (scrollRef.current) {
+      const { current } = scrollRef;
+      // Scroll roughly one screen width / 3 to move one card, or full width
+      const scrollAmount = current.clientWidth / 3;
+      if (direction === 'left') {
+        current.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+      } else {
+        current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+      }
+    }
+  };
+
   return (
     <div className="bg-gray-50 py-16 border-t border-gray-200">
       <div className="container mx-auto px-4 md:px-8">
         
-        {/* YouTube Section (Moved Up) */}
-        <div className="mb-16">
-           <div className="flex justify-between items-end mb-8">
-              <h2 className="text-3xl font-black uppercase text-slovak-blue">FIELD HOCKEY TV</h2>
-              <button className="text-slovak-red font-bold text-sm hover:underline">Všetky videá</button>
+        {/* Header with Nav */}
+        <div className="flex flex-col md:flex-row justify-between items-end mb-8 gap-4">
+           <div className="flex items-center gap-3">
+              <div className="w-12 h-12 bg-slovak-blue rounded-xl flex items-center justify-center shadow-lg shadow-blue-900/20 text-white">
+                <Tv size={24} />
+              </div>
+              <div>
+                <span className="text-slovak-red font-bold text-xs uppercase tracking-widest block mb-1">Galéria</span>
+                <h2 className="text-3xl font-black uppercase text-slovak-blue leading-none">FIELD HOCKEY TV</h2>
+              </div>
            </div>
            
-           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-              {VIDEOS.map(video => (
-                <div key={video.id} className="relative rounded-2xl overflow-hidden shadow-lg aspect-[16/9] bg-black group cursor-pointer border border-gray-100">
-                   {/* Thumbnail Image */}
-                   <img 
-                     src={`https://i.ytimg.com/vi/${video.id}/hqdefault.jpg`} 
-                     alt="Video Thumbnail"
-                     className="w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700"
-                   />
-                   
-                   {/* Clean Play Button Overlay */}
-                   <div className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none">
-                      <div className="w-14 h-14 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center border-2 border-white group-hover:scale-110 transition-transform shadow-xl">
-                         <Play fill="white" className="text-white ml-1" size={24} />
-                      </div>
-                   </div>
-                </div>
-              ))}
+           {/* Navigation Arrows */}
+           <div className="flex gap-2">
+              <button 
+                onClick={() => scroll('left')}
+                className="w-10 h-10 rounded-full bg-white border border-gray-200 flex items-center justify-center text-gray-600 hover:bg-slovak-blue hover:text-white hover:border-slovak-blue transition-all active:scale-95 shadow-sm"
+              >
+                <ChevronLeft size={20} />
+              </button>
+              <button 
+                onClick={() => scroll('right')}
+                className="w-10 h-10 rounded-full bg-white border border-gray-200 flex items-center justify-center text-gray-600 hover:bg-slovak-blue hover:text-white hover:border-slovak-blue transition-all active:scale-95 shadow-sm"
+              >
+                <ChevronRight size={20} />
+              </button>
            </div>
         </div>
-
-        {/* Instagram Section (Moved Down) */}
-        <div className="flex flex-col items-center">
-           <div className="flex flex-col md:flex-row items-center justify-center gap-3 mb-10">
-              <Instagram className="text-slovak-blue" size={28} />
-              <h2 className="text-2xl font-black uppercase text-slovak-blue text-center md:text-left">
-                SLEDUJ NÁS NA INSTAGRAME
-              </h2>
-           </div>
            
-           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 w-full">
-              {INSTAGRAM_POSTS.map(post => (
-                <div key={post.id} className="relative group aspect-square overflow-hidden rounded-xl bg-gray-200 cursor-pointer">
-                   <img src={post.imageUrl} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
-                   <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2 text-white font-bold">
-                      <Heart fill="white" size={20} /> {post.likes}
-                   </div>
+        {/* 3-Column Carousel */}
+        <div 
+          ref={scrollRef}
+          className="flex overflow-x-auto gap-6 pb-8 -mx-4 px-4 md:mx-0 md:px-0 snap-x hide-scrollbar scroll-smooth"
+        >
+          {VIDEOS.map(video => (
+            <div 
+                key={video.id} 
+                // Width calculation: 33.333% minus gap adjustment to fit exactly 3
+                className="min-w-[85vw] md:min-w-[calc(33.333%-1rem)] snap-center relative rounded-2xl overflow-hidden shadow-lg aspect-[16/9] bg-black group cursor-pointer border border-gray-100 shrink-0"
+            >
+                {/* Thumbnail Image */}
+                <img 
+                  src={`https://i.ytimg.com/vi/${video.id}/hqdefault.jpg`} 
+                  alt="Video Thumbnail"
+                  className="w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700"
+                />
+                
+                {/* Clean Play Button Overlay */}
+                <div className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none">
+                  <div className="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center border-2 border-white group-hover:scale-110 transition-transform shadow-xl">
+                      <Play fill="white" className="text-white ml-1" size={28} />
+                  </div>
                 </div>
-              ))}
-           </div>
-
-           {/* New Handle Button */}
-           <div className="mt-8">
-               <button className="text-white font-bold text-xs uppercase tracking-widest bg-slovak-blue px-5 py-2.5 rounded-full hover:bg-blue-900 transition-all shadow-sm">
-                   @fieldhockey_slovakia
-               </button>
-           </div>
+            </div>
+          ))}
         </div>
 
       </div>
