@@ -7,16 +7,25 @@ import { MatchListTable } from './components/MatchListTable';
 import { Roster } from './components/Roster';
 import { StatsHub } from './components/StatsHub';
 import { NewsSection } from './components/NewsSection';
+import { NewsDetail } from './components/NewsDetail';
 import { GetInvolved } from './components/GetInvolved';
 import { SocialMedia } from './components/SocialMedia';
 import { Partners } from './components/Partners';
 import { ProjectsCarousel } from './components/ProjectsCarousel';
-import { MATCHES, TEAM_SVK } from './constants';
+import { MATCHES, NEWS } from './constants';
 import { MatchCard } from './components/MatchCard';
 import { MapPin, Calendar, Trophy, ChevronRight, PlayCircle, Star, Clock } from 'lucide-react';
 
 const App: React.FC = () => {
   const [currentView, setCurrentView] = useState('home');
+  const [selectedArticleId, setSelectedArticleId] = useState<string | null>(null);
+
+  // Handler to open article details
+  const handleArticleClick = (id: string) => {
+    setSelectedArticleId(id);
+    setCurrentView('news-detail');
+    window.scrollTo(0, 0);
+  };
 
   // 1. Filter ONLY National Team Matches
   const nationalMatches = MATCHES.filter(m => 
@@ -43,13 +52,19 @@ const App: React.FC = () => {
       return <StatsHub />;
     }
     if (currentView === 'news') {
-      return <NewsSection />;
+      return <NewsSection onArticleClick={handleArticleClick} />;
+    }
+    if (currentView === 'news-detail' && selectedArticleId) {
+      const article = NEWS.find(n => n.id === selectedArticleId);
+      if (article) {
+        return <NewsDetail article={article} onBack={() => setCurrentView('home')} />;
+      }
     }
     
     // Default Home View
     return (
       <div className="pb-0">
-        <Hero />
+        <Hero onArticleClick={handleArticleClick} />
         
         {/* Widgets Section - Moved down (mt-8) to sit below hero */}
         <div className="container mx-auto px-4 md:px-8 relative z-20 mt-8 mb-12">
@@ -59,7 +74,7 @@ const App: React.FC = () => {
               {lastNationalResult && (
                 <div 
                   onClick={() => setCurrentView('matches')}
-                  className="bg-white rounded-3xl p-6 border border-gray-100 shadow-sm hover:shadow-md border-t-4 border-t-slovak-blue flex flex-col justify-between h-full group cursor-pointer transition-all duration-300 relative overflow-hidden min-h-[240px]"
+                  className="bg-white rounded-3xl p-6 border border-gray-100 shadow-none hover:shadow-md border-t-4 border-t-slovak-blue flex flex-col justify-between h-full group cursor-pointer transition-all duration-300 relative overflow-hidden min-h-[240px]"
                 >
                    {/* Header - Explicit Context */}
                    <div className="flex flex-col md:flex-row md:justify-between items-start border-b border-gray-100 pb-3 mb-2 gap-2 md:gap-0">
@@ -127,7 +142,7 @@ const App: React.FC = () => {
               {/* 2. Next National Match Teaser */}
               <div 
                 onClick={() => setCurrentView('matches')}
-                className="bg-slovak-red rounded-3xl p-6 border border-red-600 shadow-sm hover:shadow-md text-white relative overflow-hidden flex flex-col min-h-[240px] group cursor-pointer transition-all duration-300"
+                className="bg-slovak-red rounded-3xl p-6 border border-red-600 shadow-none hover:shadow-md text-white relative overflow-hidden flex flex-col min-h-[240px] group cursor-pointer transition-all duration-300"
               >
                  {/* Background Effects */}
                  <div className="absolute right-0 top-0 w-64 h-64 bg-white opacity-5 rounded-full translate-x-1/3 -translate-y-1/3 blur-3xl"></div>
@@ -235,7 +250,9 @@ const App: React.FC = () => {
                          <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest block mt-[3px]">
                             Hráč Týždňa
                          </span>
-                         <img src="https://flagcdn.com/w40/sk.png" alt="Slovakia" className="w-6 rounded-[2px] shadow-sm" />
+                         <div className="flex items-start">
+                            <img src="https://flagcdn.com/w40/sk.png" alt="Slovakia" className="w-6 rounded-[2px] shadow-sm" />
+                         </div>
                      </div>
                      <div className="flex flex-col items-start gap-1">
                         <span className="bg-gray-100 text-gray-600 text-[10px] font-bold px-2 py-0.5 rounded uppercase">
@@ -275,7 +292,7 @@ const App: React.FC = () => {
 
         {/* 2. News */}
         <div className="py-4">
-           <NewsSection />
+           <NewsSection onArticleClick={handleArticleClick} />
         </div>
 
         {/* 3. 10 Match List Table */}

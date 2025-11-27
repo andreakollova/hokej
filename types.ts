@@ -1,3 +1,4 @@
+
 export enum MatchStatus {
   UPCOMING = 'UPCOMING',
   LIVE = 'LIVE',
@@ -48,6 +49,7 @@ export interface NewsItem {
   id: string;
   title: string;
   snippet: string;
+  content?: string; // HTML string or long text
   date: string;
   category: string;
   imageUrl: string;

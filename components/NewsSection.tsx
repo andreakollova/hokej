@@ -3,7 +3,11 @@ import React, { useState, useRef } from 'react';
 import { NEWS } from '../constants';
 import { ArrowRight, Clock, TrendingUp, Share2, ShoppingBag, ChevronLeft, ChevronRight, Trophy } from 'lucide-react';
 
-export const NewsSection: React.FC = () => {
+interface NewsSectionProps {
+  onArticleClick: (id: string) => void;
+}
+
+export const NewsSection: React.FC<NewsSectionProps> = ({ onArticleClick }) => {
   const [activeTab, setActiveTab] = useState<'VŠETKY' | 'REPREZENTÁCIA' | 'LIGA'>('VŠETKY');
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
@@ -38,7 +42,7 @@ export const NewsSection: React.FC = () => {
       <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-6 gap-6">
          <div className="-mt-5 w-full">
             <span className="text-slovak-red font-bold text-xs uppercase tracking-widest mb-2 block">ZO SVETA POZEMNÉHO HOKEJA</span>
-            <h2 className="text-5xl md:text-5xl font-black tracking-tighter text-slovak-blue mb-4 uppercase">AKTUALITY</h2>
+            <h2 className="text-4xl md:text-5xl font-black tracking-tighter text-slovak-blue mb-4 uppercase">AKTUALITY</h2>
             
             {/* Toggles - Optimized for Mobile */}
             <div className="flex flex-nowrap gap-2 overflow-x-auto hide-scrollbar pb-2 md:pb-0 w-full">
@@ -46,7 +50,7 @@ export const NewsSection: React.FC = () => {
                  <button
                    key={tab}
                    onClick={() => setActiveTab(tab)}
-                   className={`px-3 py-2 md:px-6 md:py-2.5 rounded-full text-[10px] md:text-sm font-bold transition-all duration-300 border flex items-center gap-1.5 md:gap-2 uppercase whitespace-nowrap ${
+                   className={`px-3 py-2 md:px-6 md:py-2.5 rounded-full text-[10px] md:text-sm font-bold transition-all duration-300 border flex items-center gap-1.5 md:gap-2 uppercase whitespace-nowrap shadow-none ${
                      activeTab === tab 
                        ? 'bg-slovak-blue text-white border-slovak-blue' 
                        : 'bg-white text-gray-500 border-gray-200 hover:border-gray-300 hover:bg-gray-50'
@@ -74,7 +78,10 @@ export const NewsSection: React.FC = () => {
             {/* Left: Featured Hero Card */}
             <div className="lg:col-span-8 flex flex-col">
               {featuredNews && (
-                <div className="relative h-full min-h-[400px] md:min-h-[600px] w-full rounded-xl overflow-hidden group cursor-pointer shadow-2xl shadow-blue-900/20 ring-1 ring-black/5">
+                <div 
+                  onClick={() => onArticleClick(featuredNews.id)}
+                  className="relative h-[400px] md:h-[600px] w-full rounded-xl overflow-hidden group cursor-pointer shadow-2xl shadow-blue-900/20 ring-1 ring-black/5"
+                >
                   <img 
                     src={featuredNews.imageUrl} 
                     alt={featuredNews.title}
@@ -98,7 +105,7 @@ export const NewsSection: React.FC = () => {
                       {featuredNews.title}
                     </h3>
                     
-                    <p className="text-gray-200 text-sm md:text-xl line-clamp-3 max-w-3xl font-medium leading-relaxed opacity-90 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-200">
+                    <p className="text-gray-200 text-sm md:text-xl font-medium leading-relaxed max-w-3xl opacity-90 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-200 line-clamp-2 md:line-clamp-3">
                       {featuredNews.snippet}
                     </p>
 
@@ -132,6 +139,7 @@ export const NewsSection: React.FC = () => {
                         {recentNews.map((item) => (
                           <div 
                             key={item.id} 
+                            onClick={() => onArticleClick(item.id)}
                             className="flex gap-4 group cursor-pointer relative z-10 hover:bg-gray-50 p-2 rounded-lg transition-colors -mx-2"
                           >
                               {/* Dot - Dark Blue */}
@@ -156,7 +164,7 @@ export const NewsSection: React.FC = () => {
                       </div>
                   </div>
                   
-                  <button className="w-full mt-16 py-3 rounded-lg bg-gray-50 text-gray-600 text-xs font-black uppercase tracking-widest hover:bg-slovak-blue hover:text-white transition-all border border-gray-100 shadow-sm hover:shadow-lg mt-auto">
+                  <button className="w-full mt-12 py-3 rounded-lg bg-gray-50 text-gray-600 text-xs font-black uppercase tracking-widest hover:bg-slovak-blue hover:text-white transition-all border border-gray-100 shadow-sm hover:shadow-lg mt-auto">
                     Zobraziť viac článkov
                   </button>
               </div>
@@ -198,6 +206,7 @@ export const NewsSection: React.FC = () => {
                   {trendingNews.map((item, index) => (
                     <div 
                       key={item.id} 
+                      onClick={() => onArticleClick(item.id)}
                       className="snap-center shrink-0 w-[260px] md:w-[300px] h-[360px] relative rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer group"
                       style={{ transitionDelay: `${index * 50}ms` }}
                     >

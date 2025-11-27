@@ -1,5 +1,4 @@
 
-
 import { Match, MatchStatus, Player, NewsItem, Team, Partner, InstagramPost, VideoItem } from './types';
 
 // National Team
@@ -231,6 +230,25 @@ export const NEWS: NewsItem[] = [
     id: 'n1', 
     title: 'Dievčatá reprezentácie do 15 rokov ovládli Suda Cup 2025 v Hradci Králové!', 
     snippet: 'Na Youth Leadership Festivale EuroHockey Institute v nemeckom Mönchengladbachu sa v auguste stretli desiatky mladých hokejových nadšencov z celej Európy. Počas niekoľkých dní absolvovali intenzívny program workshopov a diskusií, zameraných na rozvoj líderských zručností, inklúziu, marketing či duševné zdravie.', 
+    content: `
+      <p>Na Youth Leadership Festivale EuroHockey Institute v nemeckom Mönchengladbachu sa v auguste stretli desiatky mladých hokejových nadšencov z celej Európy. Počas niekoľkých dní absolvovali intenzívny program workshopov a diskusií, zameraných na rozvoj líderských zručností, inklúziu, marketing či duševné zdravie.</p>
+      
+      <h3>Úspešná reprezentácia</h3>
+      <p>Slovenská výprava sa nestratila a dievčatá predviedli fantastické výkony. Turnaj, ktorý sa konal pod záštitou Európskej federácie, bol prehliadkou budúcich hviezd tohto športu. Naše hráčky ukázali nielen technickú zdatnosť, ale aj tímového ducha, ktorý ich zdobil počas celého podujatia.</p>
+      
+      <p>"Je to pre nás obrovský úspech a potvrdenie, že práca s mládežou na Slovensku má zmysel," povedal hlavný tréner po finálovom zápase.</p>
+
+      <h3>Cesta za zlatom</h3>
+      <p>V skupinovej fáze sme nenašli premožiteľa. Porazili sme výbery z Česka, Rakúska aj silného Poľska. Finálový zápas bol napínavý až do poslednej sekundy, no vďaka disciplinovanej obrane a efektívnemu útoku sme sa mohli radovať z celkového prvenstva.</p>
+      
+      <ul>
+        <li>Výhra nad Českom 3:1</li>
+        <li>Remíza s Rakúskom 2:2</li>
+        <li>Výhra nad Poľskom 1:0</li>
+      </ul>
+
+      <p>Tento úspech je motiváciou do ďalšej práce a veríme, že o týchto dievčatách budeme ešte veľa počuť v seniorských kategóriách.</p>
+    `,
     date: 'Pred 2 hodinami', 
     category: 'Reprezentácia', 
     imageUrl: 'https://szph.sk/wp-content/uploads/2025/11/MG_8015-1.jpg' 

@@ -1,8 +1,13 @@
+
 import React, { useState, useEffect } from 'react';
 import { NEWS } from '../constants';
 import { Calendar, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 
-export const Hero: React.FC = () => {
+interface HeroProps {
+  onArticleClick: (id: string) => void;
+}
+
+export const Hero: React.FC<HeroProps> = ({ onArticleClick }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const slides = NEWS.slice(0, 3);
 
@@ -17,7 +22,7 @@ export const Hero: React.FC = () => {
   const prevSlide = () => setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
 
   return (
-    <div className="relative w-full h-[500px] md:h-[580px] text-white overflow-hidden rounded-b-[40px] md:rounded-b-[60px] shadow-2xl mx-auto max-w-[1920px] group bg-slovak-blue">
+    <div className="relative w-full h-[550px] md:h-[580px] text-white overflow-hidden rounded-b-[40px] md:rounded-b-[60px] shadow-2xl mx-auto max-w-[1920px] group bg-slovak-blue">
       
       {/* Background Slides */}
       {slides.map((slide, index) => (
@@ -74,7 +79,10 @@ export const Hero: React.FC = () => {
               </p>
 
               <div className="pt-6 flex flex-wrap gap-4">
-                 <button className="bg-white text-slovak-blue hover:bg-slovak-red hover:text-white px-5 py-2.5 md:px-6 md:py-3 rounded-full font-black text-xs md:text-sm transition-all shadow-xl flex items-center gap-2 group/btn transform hover:-translate-y-1">
+                 <button 
+                   onClick={() => onArticleClick(slide.id)}
+                   className="bg-white text-slovak-blue hover:bg-slovak-red hover:text-white px-6 py-3.5 rounded-full font-black text-xs md:text-sm transition-all shadow-xl flex items-center gap-2 group/btn transform hover:-translate-y-1"
+                 >
                     Čítať článok 
                     <ArrowRight size={16} className="group-hover/btn:translate-x-1 transition-transform" />
                  </button>
@@ -90,7 +98,7 @@ export const Hero: React.FC = () => {
                <button 
                  key={idx}
                  onClick={() => setCurrentSlide(idx)}
-                 className={`h-2 rounded-full transition-all duration-500 ease-out ${idx === currentSlide ? 'w-12 bg-slovak-red' : 'w-2 bg-white/30 hover:bg-white'}`}
+                 className={`h-2 rounded-full transition-all duration-500 ease-out ${idx === currentSlide ? 'w-10 bg-slovak-red' : 'w-2 bg-white/30 hover:bg-white'}`}
                  aria-label={`Go to slide ${idx + 1}`}
                />
              ))}
@@ -99,17 +107,17 @@ export const Hero: React.FC = () => {
           <div className="flex gap-2.5">
             <button 
               onClick={prevSlide} 
-              className="w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center bg-white/10 hover:bg-white/20 border border-white/20 backdrop-blur text-white transition-all hover:scale-105 active:scale-95"
+              className="w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center bg-white/10 hover:bg-white/20 border border-white/20 backdrop-blur text-white transition-all hover:scale-105 active:scale-95"
               aria-label="Previous slide"
             >
-              <ChevronLeft size={20} />
+              <ChevronLeft size={18} />
             </button>
             <button 
               onClick={nextSlide} 
-              className="w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center bg-white text-slovak-blue hover:bg-slovak-red hover:text-white border border-transparent shadow-lg transition-all hover:scale-105 active:scale-95"
+              className="w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center bg-white text-slovak-blue hover:bg-slovak-red hover:text-white border border-transparent shadow-lg transition-all hover:scale-105 active:scale-95"
               aria-label="Next slide"
             >
-              <ChevronRight size={20} />
+              <ChevronRight size={18} />
             </button>
           </div>
       </div>
